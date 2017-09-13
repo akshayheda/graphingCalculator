@@ -11,12 +11,12 @@ Xmin = -10
 Xmax = 10
 Ymin = -10
 Ymax = 10
-resolution = 0.1
+resolution = 0.001
 
 x_values=[]
 y_values=[]
 
-y1 ="x*x"
+y1 ="1/x"
 ast = parser.expr(y1)
 code = ast.compile()
 
@@ -42,9 +42,12 @@ def generatePoints(a):
         x = x_values[counter]
         y_values.append(eval(code))
         #print(y_values[counter])
+        print(str(x_values[counter])+ " , " + str(y_values[counter]))
+
 
         counter = counter + 1
     print("Generated y values successfully")
+
 
 
 #def evaluate(f,value):
@@ -68,12 +71,14 @@ def main():
 
     a = parse_expr(y1)
 
-    #print(evaluate(a, 2))
+    #x = 0
+    #print(eval(code))
 
 
 
     generatePoints(a)
     graph()
+
 
 if __name__ == "__main__":
     main()
