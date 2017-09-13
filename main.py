@@ -19,7 +19,7 @@ resolution = np.float128(0.01)
 x_values=[]
 y_values=[]
 
-y1 ="1/x"
+y1 ="-1/x"
 ast = parser.expr(y1)
 code = ast.compile()
 
@@ -46,13 +46,14 @@ def generatePoints(a):
     while(counter < len(x_values)):
         x = x_values[counter]
 
-        ymax = 10000000000000000
+        ymax = 1000000000
 
         y_eval = eval(code)
-        if(y_eval > ymax):
-            y_values.append("NaN")
+        if(abs(y_eval) > ymax):
+            y_values.append(np.nan)
+        else:
+            y_values.append(y_eval)
 
-        y_values.append(eval(code))
         #print(y_values[counter])
         print(str(counter) + " : " + str(x_values[counter])+ " , " + str(y_values[counter]))
 
@@ -71,8 +72,8 @@ def generatePoints(a):
 
 def graph():
 
-    tg.plot(x_values[0:999], y_values[0:999],'-b')
-    tg.plot(x_values[1001:1999], y_values[1001:1999],'-b')
+    tg.plot(x_values, y_values,'-b')
+    #tg.plot(x_values[1001:1999], y_values[1001:1999],'-b')
     tg.show()
 
 def main():
