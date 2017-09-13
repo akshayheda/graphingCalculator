@@ -2,6 +2,8 @@ from __future__ import division
 import matplotlib.pyplot as tg
 from sympy.parsing.sympy_parser import *
 from sympy import *
+import parser
+import math
 
 
 
@@ -14,7 +16,9 @@ resolution = 0.1
 x_values=[]
 y_values=[]
 
-y1 ="((x -2) * (x-3 ))/ (x-2)"
+y1 ="x*x"
+ast = parser.expr(y1)
+code = ast.compile()
 
 def my_range(start, end, step):
     while start <= end:
@@ -35,26 +39,23 @@ def generatePoints(a):
 
 
     while(counter < len(x_values)):
-
-        y_values.append(evaluate(a,x_values[counter]))
+        x = x_values[counter]
+        y_values.append(eval(code))
         #print(y_values[counter])
 
         counter = counter + 1
     print("Generated y values successfully")
 
 
-def evaluate(f,value):
-    x, y, z, t = symbols('x y z t')
+#def evaluate(f,value):
+    #x, y, z, t = symbols('x y z t')
 
 
-    return N(f.subs(x,value))
+    #return N(f.subs(x,value))
     #return f.subs(x, value)
 
 def graph():
-
     tg.plot(x_values, y_values)
-
-
     tg.show()
 
 def main():
@@ -67,7 +68,8 @@ def main():
 
     a = parse_expr(y1)
 
-    print(evaluate(a, 2))
+    #print(evaluate(a, 2))
+
 
 
     generatePoints(a)
