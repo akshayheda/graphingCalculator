@@ -4,6 +4,7 @@ from sympy.parsing.sympy_parser import *
 from sympy import *
 import parser
 import numpy as np
+import seaborn
 from decimal import *
 import math
 
@@ -11,15 +12,15 @@ import math
 
 Xmin = -10
 Xmax = 10
-Ymin = -10
-Ymax = 10
-resolution = np.float128(0.01)
+Ymin = -1000
+Ymax = 1000
+resolution = np.float64(0.01)
 
 
 x_values=[]
 y_values=[]
 
-y1 ="-1/x"
+y1 ="x**3"
 ast = parser.expr(y1)
 code = ast.compile()
 
@@ -36,12 +37,12 @@ def generatePoints(a):
 
     for x in my_range(Xmin, Xmax, resolution):
         x_values.append(x)
-        print(x_values[i])
+        #print(x_values[i])
         i = i + 1
     counter = 0
     print("Generated x values successfully")
 
-
+    y_eval_previous = np.float64(0)
 
     while(counter < len(x_values)):
         x = x_values[counter]
@@ -49,10 +50,16 @@ def generatePoints(a):
         ymax = 1000000000
 
         y_eval = eval(code)
-        if(abs(y_eval) > ymax):
+        ycurrent = np.float64(y_eval)
+
+        if( (abs(y_eval) > ymax) or ( abs(ycurrent + -1 * y_eval_previous)) > 1000 ):
+            print("FLAG >>>>>>>>>>>>>>> " + str(abs(ycurrent + -1 * y_eval_previous)))
             y_values.append(np.nan)
         else:
             y_values.append(y_eval)
+            y_eval_previous = y_values
+
+
 
         #print(y_values[counter])
         print(str(counter) + " : " + str(x_values[counter])+ " , " + str(y_values[counter]))
@@ -72,9 +79,26 @@ def generatePoints(a):
 
 def graph():
 
-    tg.plot(x_values, y_values,'-b')
+    #tg.plot(x_values, y_values,'-b')
     #tg.plot(x_values[1001:1999], y_values[1001:1999],'-b')
+
+    fig = tg.figure()
+    ax = fig.add_subplot(111)
+    ax.plot(x_values, y_values)
+
+    # using 'spines', new in Matplotlib 1.0
+    ax.spines['left'].set_position('zero')
+    ax.spines['right'].set_color('none')
+    ax.spines['bottom'].set_position('zero')
+    ax.spines['top'].set_color('none')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['bottom'].set_smart_bounds(True)
+    ax.xaxis.set_ticks_position('bottom')
+    ax.yaxis.set_ticks_position('left')
+
+    tg.ylim([Ymin, Ymax])
     tg.show()
+
 
 def main():
 
