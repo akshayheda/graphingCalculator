@@ -12,15 +12,15 @@ import math
 
 Xmin = -10
 Xmax = 10
-Ymin = -1000
-Ymax = 1000
-resolution = np.float64(0.01)
+Ymin = -10
+Ymax = 10
+resolution = np.float64(pi/32)
 
 
 x_values=[]
 y_values=[]
 
-y1 ="x**3"
+y1 ="tan(x)"
 ast = parser.expr(y1)
 code = ast.compile()
 
@@ -52,12 +52,17 @@ def generatePoints(a):
         y_eval = eval(code)
         ycurrent = np.float64(y_eval)
 
-        if( (abs(y_eval) > ymax) or ( abs(ycurrent + -1 * y_eval_previous)) > 1000 ):
-            print("FLAG >>>>>>>>>>>>>>> " + str(abs(ycurrent + -1 * y_eval_previous)))
+        if ((abs(y_eval) > ymax)):
             y_values.append(np.nan)
         else:
             y_values.append(y_eval)
             y_eval_previous = y_values
+
+        #if( (abs(y_eval) > ymax) ):
+        #    y_values.append(np.nan)
+        #else:
+        #    y_values.append(y_eval)
+        #   y_eval_previous = y_values
 
 
 
@@ -87,14 +92,14 @@ def graph():
     ax.plot(x_values, y_values)
 
     # using 'spines', new in Matplotlib 1.0
-    ax.spines['left'].set_position('zero')
-    ax.spines['right'].set_color('none')
-    ax.spines['bottom'].set_position('zero')
-    ax.spines['top'].set_color('none')
-    ax.spines['left'].set_smart_bounds(True)
-    ax.spines['bottom'].set_smart_bounds(True)
-    ax.xaxis.set_ticks_position('bottom')
-    ax.yaxis.set_ticks_position('left')
+    #ax.spines['left'].set_position('zero')
+    #ax.spines['right'].set_color('none')
+    #ax.spines['bottom'].set_position('zero')
+    #ax.spines['top'].set_color('none')
+    #ax.spines['left'].set_smart_bounds(True)
+    #ax.spines['bottom'].set_smart_bounds(True)
+    #ax.xaxis.set_ticks_position('bottom')
+    #ax.yaxis.set_ticks_position('left')
 
     tg.ylim([Ymin, Ymax])
     tg.show()
