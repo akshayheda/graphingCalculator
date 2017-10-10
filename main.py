@@ -23,12 +23,13 @@ Lower = 25
 isRational = False
 
 x_values=[]
-y1 ="x-2"
+y1 ="log(x,e)"
 Function = ""
 num = ""
 denom = ""
 
 def compileExpression(expr):
+
     print("Expression to be compiled: " + expr)
     return compile(expr, "temp.py", "eval")
 
@@ -273,9 +274,15 @@ def findInflection(FPrimeZeroes, yFunction):
         if(x != (Xmin or Xmax)):
 
             y_prev = secondDeriv(x-0.001, yFunction)
+            print("prev" + str(y_prev))
             y_next = secondDeriv(x+0.001, yFunction)
+            print("next" + str(y_next))
+            if((y_prev > 0 and y_next < 0)  ):
 
-            if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)   ):
+                InflectionX.append(x)
+                InflectionY.append(evaluate(x, yFunction))
+                plotDot(x, evaluate(x, yFunction), "green")
+            elif(y_prev < 0 and y_next > 0):
 
                 InflectionX.append(x)
                 InflectionY.append(evaluate(x, yFunction))
@@ -289,8 +296,26 @@ def plotDot(x,y,color):
 
     tg.scatter(x, y,c=color, s=100)
 
+def preParseString(expr):
+    print(expr)
+
+    expr = expr.lower()
+    expr = expr.replace("^", "**")
+    expr = expr.replace("sec(", "(1)/cos(")
+    expr = expr.replace("csc(", "(1)/sin(")
+    expr = expr.replace("cot(", "(1)/tan(")
+
+    print(expr)
+
+    return expr
+
 def main():
-    y1COMPILED = compileExpression(y1)
+
+    get = input("f(x) = ")
+
+    get = preParseString(get)
+
+    y1COMPILED = compileExpression(get)
 
     start = timeit.default_timer()
 
@@ -313,8 +338,7 @@ def main():
     print("Basic properties evaluated successfully" + "\n")
 
 
-
-    print("f(x) = " + y1)
+    print("f(x) = " + get)
 
     print("Definite integral approximated using Simpson's 3/8 rule...")
 
@@ -329,7 +353,7 @@ def main():
 
     #print("Zeroes of f(x): " + str(findZeroes(x_values,y_values)))
     #print("Zeroes of f'(x): " + str(findZeroes(x_values, y_deriv)))
-    #print("Zeroes of f''(x): " + str(findZeroes(x_values, y_second_deriv)))
+    print("Zeroes of f''(x): " + str(findZeroes(x_values, y_second_deriv)))
 
     findExtrema(findZeroes(x_values, y_deriv), y1COMPILED)
     findInflection(findZeroes(x_values, y_second_deriv), y1COMPILED)
