@@ -17,10 +17,13 @@ Ymin = -10
 Ymax = 10
 resolution = 0.001
 
+Upper = 100
+Lower = 25
+
 isRational = False
 
 x_values=[]
-y1 ="x**2"
+y1 ="x-2"
 Function = ""
 num = ""
 denom = ""
@@ -44,7 +47,7 @@ def generateXValues():
         else:
             x_val.append( round(x, 3) )
     return x_val
-    print("Generated x values successfully")
+    #print("Generated x values successfully")
 
 def genF(Function, Domain):
     y = []
@@ -61,7 +64,7 @@ def genF(Function, Domain):
         else:
             y.append(y_val)
 
-        print("X: " + str(i) + " Y: " + str(y[counter]))
+        #print("X: " + str(i) + " Y: " + str(y[counter]))
         counter += 1
 
     PlotTimeEnd = timeit.default_timer()
@@ -203,7 +206,7 @@ def compileHoles(Domain, yvals, yFunction):
             y = evaluate(x, yFunction)
 
             if (math.isnan(y)):
-                print("Found nan")
+
                 yPrev = yvals[counter - 1]
                 yNext = yvals[counter + 1]
 
@@ -244,14 +247,14 @@ def findExtrema(Zeroes, yFunction):
     for x in Zeroes:
 
         if(x != (Xmin or Xmax)):
-            print("not xmin or max")
+
             y_prev = deriv(x-0.001, yFunction)
-            print(y_prev)
+
             y_next = deriv(x+0.001, yFunction)
-            print(y_next)
+
 
             if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)):
-                print("Found extrema")
+
                 ExtremaX.append(x)
                 ExtremaY.append(evaluate(x, yFunction))
                 plotDot(x,evaluate(x, yFunction) ,"red")
@@ -268,14 +271,12 @@ def findInflection(FPrimeZeroes, yFunction):
     for x in FPrimeZeroes:
 
         if(x != (Xmin or Xmax)):
-            print("not xmin or max")
-            y_prev = secondDeriv(x-0.001, yFunction)
-            print(y_prev)
-            y_next = secondDeriv(x+0.001, yFunction)
-            print(y_next)
 
-            if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)):
-                print("Found extrema")
+            y_prev = secondDeriv(x-0.001, yFunction)
+            y_next = secondDeriv(x+0.001, yFunction)
+
+            if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)   ):
+
                 InflectionX.append(x)
                 InflectionY.append(evaluate(x, yFunction))
                 plotDot(x,evaluate(x, yFunction) ,"green")
@@ -309,32 +310,35 @@ def main():
     plotToGraph(x_values, y_deriv, '-b')
     plotToGraph(x_values, y_second_deriv, '-g')
 
-    print("Basic properties evaluated successfully")
+    print("Basic properties evaluated successfully" + "\n")
 
-    stop = timeit.default_timer()
 
-    print("Total Run time: " + str(stop - start) + " seconds")
 
     print("f(x) = " + y1)
 
     print("Definite integral approximated using Simpson's 3/8 rule...")
 
-    Upper = 100
-    Lower = 25
+
 
     print("b = " + str(Upper))
     print("a = " + str(Lower))
     print("f(b) - f(a) = " + str(evaluate(Upper,y1COMPILED) - evaluate(Lower,y1COMPILED)))
     print( "Integral of f'(x) from a to b = " + str(Integrate(Upper,Lower,y1COMPILED)))
 
-    print(compileHoles(x_values, y_values,y1COMPILED))
+    compileHoles(x_values, y_values,y1COMPILED)
 
-    print("Zeroes of f(x): " + str(findZeroes(x_values,y_values)))
-    print("Zeroes of f'(x): " + str(findZeroes(x_values, y_deriv)))
-    print("Zeroes of f''(x): " + str(findZeroes(x_values, y_second_deriv)))
+    #print("Zeroes of f(x): " + str(findZeroes(x_values,y_values)))
+    #print("Zeroes of f'(x): " + str(findZeroes(x_values, y_deriv)))
+    #print("Zeroes of f''(x): " + str(findZeroes(x_values, y_second_deriv)))
 
-    print(findExtrema(findZeroes(x_values, y_deriv), y1COMPILED))
-    print(findInflection(findZeroes(x_values, y_second_deriv), y1COMPILED))
+    findExtrema(findZeroes(x_values, y_deriv), y1COMPILED)
+    findInflection(findZeroes(x_values, y_second_deriv), y1COMPILED)
+
+    print("Relative Extrema: Red Dot | Inflection Point: Green Dot")
+
+    stop = timeit.default_timer()
+
+    print("Total Run time: " + str(stop - start) + " seconds")
 
     showGraph()
 
