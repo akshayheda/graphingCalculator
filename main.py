@@ -24,9 +24,7 @@ isRational = False
 
 x_values=[]
 y1 ="log(x,e)"
-Function = ""
-num = ""
-denom = ""
+
 
 def compileExpression(expr):
 
@@ -180,8 +178,9 @@ def secondDeriv(xval, yfunction):
         secondDeriv = np.nan
     else:
         secondDeriv = (y2-y1)/ (2*h)
-    if (abs(secondDeriv) <= 1e-9):
+    if (abs(secondDeriv) <= 5e-8 ):
         secondDeriv = 0
+    #print("x: " + str(xval) + " y: " + str(secondDeriv))
     return secondDeriv
 
 def Integrate(UpperBound, LowerBound, yFunc):
@@ -274,19 +273,20 @@ def findInflection(FPrimeZeroes, yFunction):
         if(x != (Xmin or Xmax)):
 
             y_prev = secondDeriv(x-0.001, yFunction)
-            print("prev" + str(y_prev))
+            #print("prev" + str(y_prev))
             y_next = secondDeriv(x+0.001, yFunction)
-            print("next" + str(y_next))
-            if((y_prev > 0 and y_next < 0)  ):
+            #print("next" + str(y_next))
+
+            if( (y_prev and y_next) == 0):
+                print("f'(x) is ZERO for all X")
+                return InflectionCoor
+
+            if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0) ):
 
                 InflectionX.append(x)
                 InflectionY.append(evaluate(x, yFunction))
                 plotDot(x, evaluate(x, yFunction), "green")
-            elif(y_prev < 0 and y_next > 0):
 
-                InflectionX.append(x)
-                InflectionY.append(evaluate(x, yFunction))
-                plotDot(x,evaluate(x, yFunction) ,"green")
 
         counter += 1
     return InflectionCoor
@@ -310,7 +310,7 @@ def preParseString(expr):
     return expr
 
 def main():
-
+    Integrate = False
     get = input("f(x) = ")
 
     get = preParseString(get)
@@ -337,22 +337,20 @@ def main():
 
     print("Basic properties evaluated successfully" + "\n")
 
+    if(Integrate == True):
+        print("f(x) = " + get)
 
-    print("f(x) = " + get)
+        print("Definite integral approximated using Simpson's 3/8 rule...")
 
-    print("Definite integral approximated using Simpson's 3/8 rule...")
-
-
-
-    print("b = " + str(Upper))
-    print("a = " + str(Lower))
-    print("f(b) - f(a) = " + str(evaluate(Upper,y1COMPILED) - evaluate(Lower,y1COMPILED)))
-    print( "Integral of f'(x) from a to b = " + str(Integrate(Upper,Lower,y1COMPILED)))
+        print("b = " + str(Upper))
+        print("a = " + str(Lower))
+        print("f(b) - f(a) = " + str(evaluate(Upper,y1COMPILED) - evaluate(Lower,y1COMPILED)))
+        print( "Integral of f'(x) from a to b = " + str(Integrate(Upper,Lower,y1COMPILED)))
 
     compileHoles(x_values, y_values,y1COMPILED)
 
-    #print("Zeroes of f(x): " + str(findZeroes(x_values,y_values)))
-    #print("Zeroes of f'(x): " + str(findZeroes(x_values, y_deriv)))
+    print("Zeroes of f(x): " + str(findZeroes(x_values,y_values)))
+    print("Zeroes of f'(x): " + str(findZeroes(x_values, y_deriv)))
     print("Zeroes of f''(x): " + str(findZeroes(x_values, y_second_deriv)))
 
     findExtrema(findZeroes(x_values, y_deriv), y1COMPILED)
