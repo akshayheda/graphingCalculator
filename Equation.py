@@ -2,7 +2,7 @@ from __future__ import division
 import numpy as np
 from math import *
 import math
-
+import matplotlib.pyplot as plt
 
 class Equation:
 
@@ -62,6 +62,10 @@ class Equation:
 
 
     #publically accessable getter functions, to access generated values of this object
+    def getExpression(self):
+        return self.Expression
+    def getDomain(self):
+        return self.Domain
     def getYFunction(self):
         return self.YFunction
     def getYDeriv(self):
@@ -278,18 +282,27 @@ class Equation:
                     InflectionY.append(self.evaluate(x))
         return [InflectionX, InflectionY]
 
-print("\n" + "Y1" + "\n")
+def main():
 
-y1 = Equation("(x^2-4)/(x-2)",-10,10)
+    get = input("f(x) = ")
 
-print(y1.evaluate(3))
-print(y1.deriv(3))
-print(y1.secondDeriv(3))
-print(y1.Holes)
+    Functions = []
+    while get != "E":
+        Functions.append(get)
+        print("\n" + "Enter Additional Functions... Enter 'E' to begin graphing " + "\n")
+        get = input("f(x) = ")
 
-print("\n" + "Y2" + "\n")
-y2 = Equation("x^2",-10,10)
-print(y2.evaluate(3))
-print(y2.deriv(3))
-print(y2.secondDeriv(3))
-print(y2.Holes)
+
+
+    for F in Functions:
+        Y = Equation(F, -10, 10)
+        plt.plot(Y.getDomain(), Y.getYFunction(), "red")
+        plt.plot(Y.getDomain(), Y.getYDeriv(), "blue")
+        plt.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
+        plt.ylim([-10, 10])
+        print("Now showing " + Y.getExpression() + " ... Close graph to view next Function or to exit grapher")
+        plt.show()
+
+if __name__ == "__main__":
+    main()
+

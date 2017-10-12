@@ -1,4 +1,4 @@
-from __future__ import division
+#from __future__ import division
 import matplotlib.pyplot as tg
 from sympy.parsing.sympy_parser import *
 #from sympy import *
