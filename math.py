@@ -93,35 +93,38 @@ def evaluate(xval, yfunction):
 
 #derivative evaluation using a difference quotient
 def deriv(xval, yfunction):
+    #the difference between the two points being evaluated
     h = 0.0001
     y2 = evaluate(xval+h, yfunction)
     y1 = evaluate(xval-h, yfunction)
-
+    #If function is undefined at the point, then the derivative is undefined
     if(y1==nan or y2 == nan):
         deriv = np.nan
+    #derivative is the slope between two points that are very close to each other
     else:
         deriv = (y2-y1)/ (2*h)
+    #error handling for values close to zero being set equal to zero
     if (abs(deriv) <= 1e-9):
         deriv = 0
     return deriv
 
 def secondDeriv(xval, yfunction):
+    # the difference between the two points being evaluated
     h = 0.0001
     y2 = deriv(xval+h, yfunction)
     y1 = deriv(xval-h, yfunction)
-
+    # If derivative is undefined at the point, then the second derivative is undefined
     if(y1==nan or y2 == nan):
         secondDeriv = np.nan
     else:
         secondDeriv = (y2-y1)/ (2*h)
+    # error handling for values close to zero being set equal to zero. This is a larger bound than earlier as error accumulates.
     if (abs(secondDeriv) <= 5e-8 ):
         secondDeriv = 0
-    #print("x: " + str(xval) + " y: " + str(secondDeriv))
     return secondDeriv
 
-
+#Uses Simpson's 3/8th rule for precise integral estimation
 def Integrate(UpperBound, LowerBound, yFunc):
-
     lbEval = deriv(LowerBound, yFunc)
     ubEval = deriv(UpperBound, yFunc)
     TwoLEval = 3 * deriv( ((2*LowerBound) + UpperBound) / 3, yFunc)
@@ -130,29 +133,24 @@ def Integrate(UpperBound, LowerBound, yFunc):
     Integral = ((UpperBound - LowerBound) / 8 ) * ( lbEval +  TwoLEval   +  TwoUEval  + ubEval )
     return Integral
 
-def compileHoles(Domain, yvals, yFunction):
-
+def compileHoles(Domain, yvals):
     HoleX = []
     HoleY = []
     HoleCoor = [HoleX, HoleY]
-
-    counter = 0
-    for x in Domain:
-        if(x != (Xmin or Xmax)):
-
-            y = evaluate(x, yFunction)
-
-            if (math.isnan(y)):
-
-                yPrev = yvals[counter - 1]
-                yNext = yvals[counter + 1]
-
-                if(not(math.isnan(yPrev)) and not(math.isnan(yNext))):
-                    HoleX.append(Domain[counter])
-                    HoleY.append((yPrev + yNext) /2)
-
-        counter +=1
+    #Iterate through each y value, excluding the first and last y value to prevent index errors
+    for i in range(1, len(Domain)-1):
+        #checks if y value is undefined
+        if math.isnan(yvals[i]):
+            yPrev = yvals[i - 1]
+            yNext = yvals[i + 1]
+            #if y value is undefined, checks if previous and next value are undefined as well
+            if(not(math.isnan(yPrev)) and not(math.isnan(yNext))):
+                # if they are not undefined, then there is a hole
+                HoleX.append(Domain[i])
+                #approximate the y value of the hole by taking average of previous and next y value
+                HoleY.append((yPrev + yNext) /2)
     return HoleCoor
+
 
 def findZeroes(Domain, yvals):
     Zeroes = []
