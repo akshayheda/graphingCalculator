@@ -23,8 +23,14 @@ class Equation:
         self.YDeriv = self.generateFunction(1)
         self.YSecondDeriv = self.generateFunction(2)
 
-        self.Zeroes = self.findZeroes()
-        self.FPrimeZeroes = self.findZeroes
+        self.Zeroes = self.findZeroes(0)
+        self.FPrimeZeroes = self.findZeroes(1)
+
+        self.ExtremaCoor = self.findRelativeExtrema()
+        self.InflectionCoor = self.findInflection()
+
+        self.Holes = self.FindHoles()
+
 
 
     def compileExpression(self):
@@ -165,8 +171,10 @@ class Equation:
         i = 0
 
         if (level == 0):
-            for i in self.Domain:
-                yCurrent = i
+
+            for y in self.YFunction:
+
+                yCurrent = y
                 yPrev = yCurrent
                 if (i > 0):
                     yPrev = self.YFunction[i - 1]
@@ -177,26 +185,28 @@ class Equation:
 
                 i += 1
         if (level == 1):
-            for i in self.Domain:
-                yCurrent = i
+            for y in self.YDeriv:
+
+                yCurrent = y
                 yPrev = yCurrent
                 if (i > 0):
-                    yPrev = self.YDeriv[i - 1]
+                    yPrev = self.YFunction[i - 1]
 
                 if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9) or (
-                            abs(yCurrent) == 0)):
+                    abs(yCurrent) == 0)):
                     Zeroes.append(self.Domain[i])
 
                 i += 1
         if (level == 2):
-            for i in self.Domain:
-                yCurrent = i
+            for y in self.YSecondDeriv:
+
+                yCurrent = y
                 yPrev = yCurrent
                 if (i > 0):
-                    yPrev = self.YSecondDeriv[i - 1]
+                    yPrev = self.YFunction[i - 1]
 
                 if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9) or (
-                            abs(yCurrent) == 0)):
+                    abs(yCurrent) == 0)):
                     Zeroes.append(self.Domain[i])
 
                 i += 1
@@ -255,7 +265,8 @@ class Equation:
             counter += 1
         return InflectionCoor
 
-
-
-y1 = Equation("x^2",-10,10)
+y1 = Equation("(x^2-4)/(x-2)",-10,10)
 print(y1.evaluate(3))
+print(y1.deriv(3))
+print(y1.secondDeriv(3))
+print(y1.Holes)
