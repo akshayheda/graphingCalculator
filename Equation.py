@@ -265,8 +265,18 @@ class Equation:
             counter += 1
         return InflectionCoor
 
+print("\n" + "Y1" + "\n")
+
 y1 = Equation("(x^2-4)/(x-2)",-10,10)
+
 print(y1.evaluate(3))
 print(y1.deriv(3))
 print(y1.secondDeriv(3))
 print(y1.Holes)
+
+print("\n" + "Y2" + "\n")
+y2 = Equation("x^2",-10,10)
+print(y2.evaluate(3))
+print(y2.deriv(3))
+print(y2.secondDeriv(3))
+print(y2.Holes)
