@@ -139,14 +139,18 @@ class Equation:
         return secondDeriv
 
     #Uses Simpson's 3/8th rule for precise integral estimation
-    def Integrate(self, UpperBound,LowerBound):
-        lbEval = self.deriv(LowerBound)
-        ubEval = self.deriv(UpperBound)
-        TwoLEval = 3 * self.deriv( ((2*LowerBound) + UpperBound) / 3)
-        TwoUEval = 3 * self.deriv(( (LowerBound + (2 * UpperBound)) / 3 ))
+    def Integrate(self, a, b, level):
+        # integral = ((b-a)/8) [f(a) - 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
+        if level == 0:
+            return ((b-a)/8)*(self.evaluate(a) - 3*self.evaluate(((2*a)+b)/3)
+                              + 3*self.evaluate((a + (2*b))/3) + self.evaluate(b))
+        if level == 1:
+            return ((b-a)/8)*(self.deriv(a) - 3*self.deriv(((2*a)+b)/3)
+                              + 3*self.deriv((a + (2*b))/3) + self.deriv(b))
+        if level == 2:
+            return ((b-a)/8)*(self.secondDeriv(a) - 3*self.secondDeriv(((2*a)+b)/3)
+                              + 3*self.secondDeriv((a + (2*b))/3) + self.secondDeriv(b))
 
-        Integral = ((UpperBound - LowerBound) / 8 ) * ( lbEval +  TwoLEval   +  TwoUEval  + ubEval )
-        return Integral
 
     def FindHoles(self):
         HoleX = []
