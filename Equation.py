@@ -7,6 +7,25 @@ import math
 class Equation:
 
     def __init__(self, Expression = "", Xmin = -10, Xmax = 10, resolution = -1 ):
+
+        '''
+
+        Equation Constructor
+
+        :param Expression:
+        :param Xmin:
+        :param Xmax:
+        :param resolution:
+
+        The Equation contructor will generate all aspects of the equation in one shot once it is created. From there
+        any of the attributes can be accessed by the user or another function from a single command without waiting
+        for the attributes to generate.
+
+        Attributes are evaluated in order of priority
+
+        '''
+
+        #Initialize the instrance variables used in the main functions from the contructor parameters
         self.Xmin = Xmin
         self.Xmax = Xmax
         if(resolution == -1):
@@ -14,22 +33,31 @@ class Equation:
         else:
             self.resolution = resolution
         self.Expression = Expression
+
+        #Convert the string input into python readable equation string
         self.preParseString()
+        #Convert python readable string into an python file that can have x values passed it it and return y values
         self.CompiledExpression = self.compileExpression()
 
+
+        #Generate the domain
         self.Domain = self.domainGeneration()
 
+        #Generate the Y values for f, f', and f''
         self.YFunction = self.generateFunction(0)
         self.YDeriv = self.generateFunction(1)
         self.YSecondDeriv = self.generateFunction(2)
 
+        #Locate zeroes with in the Y values of f, f', and f''
         self.Zeroes = self.findZeroes(0)
         self.FPrimeZeroes = self.findZeroes(1)
         self.FDoublePrimeZeroes = self.findZeroes(2)
 
+        #Use calculus to find relative extrema and inflection points
         self.ExtremaCoor = self.findRelativeExtrema()
         self.InflectionCoor = self.findInflection()
 
+        #Locate removable discontinuities
         self.Holes = self.FindHoles()
 
 
@@ -52,14 +80,6 @@ class Equation:
         return self.InflectionCoor
     def getHoles(self):
         return self.Holes
-
-    #publically accessible setter functions to update the object
-    def setExpression(self, expr):
-        self.Expression = expr
-    def setDomain(self, xmin, xmax, resolution):
-        self.Xmin = xmin
-        self.Xmax = xmax
-        self.resolution = resolution
 
     #creates a python file that can be evaluated from the expression
     def compileExpression(self):
