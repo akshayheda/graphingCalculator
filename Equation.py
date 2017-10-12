@@ -25,6 +25,7 @@ class Equation:
 
         self.Zeroes = self.findZeroes(0)
         self.FPrimeZeroes = self.findZeroes(1)
+        self.FDoublePrimeZeroes = self.findZeroes(2)
 
         self.ExtremaCoor = self.findRelativeExtrema()
         self.InflectionCoor = self.findInflection()
@@ -202,54 +203,32 @@ class Equation:
     def findRelativeExtrema(self):
         ExtremaX = []
         ExtremaY = []
-        ExtremaCoor = [ExtremaX, ExtremaY]
+        #iterates through the critical values of the function
+        for x in self.FPrimeZeroes:
+            y_prev = self.deriv(x-0.001)
+            y_next = self.deriv(x+0.001)
+            #checks if the derivative crosses x axis
+            if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)):
+                ExtremaX.append(x)
+                ExtremaY.append(self.evaluate(x))
+        return [ExtremaX, ExtremaY]
 
-        counter = 0
-        for x in self.Zeroes:
-
-            if(x != (self.Xmin or self.Xmax)):
-
-                y_prev = self.deriv(x-0.001)
-
-                y_next = self.deriv(x+0.001)
-
-
-                if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0)):
-
-                    ExtremaX.append(x)
-                    ExtremaY.append(self.evaluate(x))
-
-            counter += 1
-        return ExtremaCoor
 
     def findInflection(self):
         InflectionX = []
         InflectionY = []
-        InflectionCoor = [InflectionX, InflectionY]
-
-        counter = 0
-        for x in self.FPrimeZeroes:
-
-            if(x != (self.Xmin or self.Xmax)):
-
+        #iterative through possible point of inflections
+        for x in self.FDoublePrimeZeroes:
                 y_prev = self.secondDeriv(x-0.001)
-                #print("prev" + str(y_prev))
                 y_next = self.secondDeriv(x+0.001)
-                #print("next" + str(y_next))
-
+                #if previous and next are zero, then the second derivative is zero, and there are no inflection points
                 if( (y_prev and y_next) == 0):
-
-                    return InflectionCoor
-
+                    return [InflectionX, InflectionY]
+                #checks if second derivative crosses X axis
                 if((y_prev > 0 and y_next < 0) or (y_prev < 0 and y_next > 0) ):
-
                     InflectionX.append(x)
                     InflectionY.append(self.evaluate(x))
-
-
-
-            counter += 1
-        return InflectionCoor
+        return [InflectionX, InflectionY]
 
 print("\n" + "Y1" + "\n")
 
