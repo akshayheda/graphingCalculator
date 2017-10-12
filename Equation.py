@@ -33,12 +33,40 @@ class Equation:
         self.Holes = self.FindHoles()
 
 
+    #publically accessable getter functions, to access generated values of this object
+    def getYFunction(self):
+        return self.YFunction
+    def getYDeriv(self):
+        return self.YDeriv
+    def getYSecondDeriv(self):
+        return self.YSecondDeriv
+    def getYZeroes(self):
+        return self.Zeroes
+    def getFPrimeZeroes(self):
+        return self.FPrimeZeroes
+    def getFDoublePrimeZeroes(self):
+        return self.FDoublePrimeZeroes
+    def getExtremaCoor(self):
+        return self.ExtremaCoor
+    def getInflectionCoor(self):
+        return self.InflectionCoor
+    def getHoles(self):
+        return self.Holes
 
+    #publically accessible setter functions to update the object
+    def setExpression(self, expr):
+        self.Expression = expr
+    def setDomain(self, xmin, xmax, resolution):
+        self.Xmin = xmin
+        self.Xmax = xmax
+        self.resolution = resolution
+
+    #creates a python file that can be evaluated from the expression
     def compileExpression(self):
         return compile(self.Expression, "temp.py", "eval")
 
+    #uses Regular Expressions to convert expression syntax to python syntax
     def preParseString(self):
-
         self.Expression = self.Expression.lower()
         self.Expression = self.Expression.replace("^", "**")
         self.Expression = self.Expression.replace("sec(", "(1)/cos(")
