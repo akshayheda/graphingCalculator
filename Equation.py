@@ -157,7 +157,7 @@ class Equation:
         HoleY = []
         HoleCoor = [HoleX, HoleY]
         #Iterate through each y value, excluding the first and last y value to prevent index errors
-        for i in range(1, len(self.Domain)-1):
+        for i in range(1, len(self.Domain)-2):
             #checks if y value is undefined
             if math.isnan(self.YFunction[i]):
                 yPrev = self.YFunction[i - 1]
@@ -175,7 +175,7 @@ class Equation:
         #function
         if (level == 0):
             #iterates through y values, starting from index 1, to prevent index errors for previous y value
-            for i in range(1, len(self.YFunction)):
+            for i in range(1, len(self.YFunction)-1):
                 yCurrent = self.YFunction[i]
                 yPrev = self.YFunction[i-1]
                 #checks if function crosses 0, or if y value is zero
@@ -183,7 +183,7 @@ class Equation:
                     Zeroes.append(self.Domain[i])
         #derivative
         if (level == 1):
-            for i in range(1, len(self.YFunction)):
+            for i in range(1, len(self.YFunction)-1):
                 yCurrent = self.YDeriv[i]
                 yPrev = self.YDeriv[i - 1]
                 # checks if deriv crosses 0, or if deriv is zero
@@ -191,7 +191,7 @@ class Equation:
                     Zeroes.append(self.Domain[i])
         #second derivative
         if (level == 2):
-            for i in range(1, len(self.YFunction)):
+            for i in range(1, len(self.YFunction)-1):
                 yCurrent = self.YSecondDeriv[i]
                 yPrev = self.YSecondDeriv[i - 1]
                 # checks if deriv crosses 0, or if second deriv is zero
