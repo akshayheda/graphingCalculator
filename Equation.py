@@ -172,49 +172,31 @@ class Equation:
 
     def findZeroes(self, level):
         Zeroes = []
-        i = 0
-
+        #function
         if (level == 0):
-
-            for y in self.YFunction:
-
-                yCurrent = y
-                yPrev = yCurrent
-                if (i > 0):
-                    yPrev = self.YFunction[i - 1]
-
-                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9) or (
-                    abs(yCurrent) == 0)):
+            #iterates through y values, starting from index 1, to prevent index errors for previous y value
+            for i in range(1, len(self.YFunction)):
+                yCurrent = self.YFunction[i]
+                yPrev = self.YFunction[i-1]
+                #checks if function crosses 0, or if y value is zero
+                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9)):
                     Zeroes.append(self.Domain[i])
-
-                i += 1
+        #derivative
         if (level == 1):
-            for y in self.YDeriv:
-
-                yCurrent = y
-                yPrev = yCurrent
-                if (i > 0):
-                    yPrev = self.YFunction[i - 1]
-
-                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9) or (
-                    abs(yCurrent) == 0)):
+            for i in range(1, len(self.YFunction)):
+                yCurrent = self.YDeriv[i]
+                yPrev = self.YDeriv[i - 1]
+                # checks if deriv crosses 0, or if deriv is zero
+                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9)):
                     Zeroes.append(self.Domain[i])
-
-                i += 1
+        #second derivative
         if (level == 2):
-            for y in self.YSecondDeriv:
-
-                yCurrent = y
-                yPrev = yCurrent
-                if (i > 0):
-                    yPrev = self.YFunction[i - 1]
-
-                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9) or (
-                    abs(yCurrent) == 0)):
+            for i in range(1, len(self.YFunction)):
+                yCurrent = self.YSecondDeriv[i]
+                yPrev = self.YSecondDeriv[i - 1]
+                # checks if deriv crosses 0, or if second deriv is zero
+                if ((yCurrent < 0 and yPrev > 0) or (yCurrent > 0 and yPrev < 0) or (abs(yCurrent) < 1e-9)):
                     Zeroes.append(self.Domain[i])
-
-                i += 1
-
         return Zeroes
 
     def findRelativeExtrema(self):
