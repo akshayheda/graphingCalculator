@@ -283,7 +283,13 @@ class Equation:
         return [InflectionX, InflectionY]
 
 def main():
-
+    fig, ax = plt.subplots()
+    xmin = -5
+    xmax = 5
+    ymin = -2
+    ymax = 2
+    xScale = 1
+    yScale = 1
     get = input("f(x) = ")
 
     Functions = []
@@ -295,13 +301,36 @@ def main():
 
 
     for F in Functions:
-        Y = Equation(F, -10, 10)
-        plt.plot(Y.getDomain(), Y.getYFunction(), "red")
-        plt.plot(Y.getDomain(), Y.getYDeriv(), "blue")
-        plt.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
-        plt.ylim([-10, 10])
+
+        Y = Equation(F, xmin, xmax)
+        ax.plot(Y.getDomain(), Y.getYFunction(), "red")
+        ax.plot(Y.getDomain(), Y.getYDeriv(), "blue")
+        ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
+        ax.scatter(Y.getHoles()[0], Y.getHoles()[1], c = "blue", s = 10000)
+
+        ax.set_ylim([ymin, ymax])
         print("Now showing " + Y.getExpression() + " ... Close graph to view next Function or to exit grapher")
-        plt.show()
+
+    ax.grid(False, which='both')
+
+    # set the x-spine (see below for more info on `set_position`)
+    ax.spines['left'].set_position('zero')
+
+    # turn off the right spine/ticks
+    ax.spines['right'].set_color('none')
+    ax.yaxis.tick_left()
+
+    # set the y-spine
+    ax.spines['bottom'].set_position('zero')
+
+    # turn off the top spine/ticks
+    ax.spines['top'].set_color('none')
+    ax.xaxis.tick_bottom()
+    plt.xticks(fontsize = 8)
+    plt.yticks(fontsize = 8)
+    plt.xticks(np.arange(xmin, xmax + 1, xScale))
+    plt.yticks(np.arange(ymin, ymax + 1, yScale))
+    plt.show()
 
 if __name__ == "__main__":
     main()
