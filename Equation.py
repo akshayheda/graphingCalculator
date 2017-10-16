@@ -82,7 +82,7 @@ class Equation:
         return self.ExtremaCoor
     def getInflectionCoor(self):
         return self.InflectionCoor
-    def getHoles(self):
+    def getHoleCoor(self):
         return self.Holes
 
     #creates a python file that can be evaluated from the expression
@@ -208,20 +208,26 @@ class Equation:
     def FindHoles(self):
         HoleX = []
         HoleY = []
-        HoleCoor = [HoleX, HoleY]
+
         #Iterate through each y value, excluding the first and last y value to prevent index errors
         for i in range(1, len(self.Domain)-2):
+
             #checks if y value is undefined
             if math.isnan(self.YFunction[i]):
+
                 yPrev = self.YFunction[i - 1]
                 yNext = self.YFunction[i + 1]
+                print(str(self.Domain[i-1]) + " " + str(yPrev) + " ")
+                print(str(self.Domain[i]) + " " + str(self.YFunction[i]))
+                print(str(self.Domain[i+1]) + " " + str(yNext))
                 #if y value is undefined, checks if previous and next value are undefined as well
                 if(not(math.isnan(yPrev)) and not(math.isnan(yNext))):
                     # if they are not undefined, then there is a hole
                     HoleX.append(self.Domain[i])
                     #approximate the y value of the hole by taking average of previous and next y value
                     HoleY.append((yPrev + yNext) /2)
-        return HoleCoor
+
+        return [HoleX, HoleY]
 
     def findZeroes(self, level):
         Zeroes = []
@@ -284,10 +290,10 @@ class Equation:
 
 def main():
     fig, ax = plt.subplots()
-    xmin = -5
-    xmax = 5
-    ymin = -2
-    ymax = 2
+    xmin = -10
+    xmax = 10
+    ymin = -10
+    ymax = 10
     xScale = 1
     yScale = 1
     get = input("f(x) = ")
@@ -306,8 +312,10 @@ def main():
         ax.plot(Y.getDomain(), Y.getYFunction(), "red")
         ax.plot(Y.getDomain(), Y.getYDeriv(), "blue")
         ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
-        ax.scatter(Y.getHoles()[0], Y.getHoles()[1], c = "blue", s = 10000)
 
+        plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=75, facecolors='none', edgecolors='purple')
+        plt.scatter(Y.getExtremaCoor()[0],Y.getExtremaCoor()[1], c = "orange", s= 75)
+        plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=75)
         ax.set_ylim([ymin, ymax])
         print("Now showing " + Y.getExpression() + " ... Close graph to view next Function or to exit grapher")
 
@@ -322,6 +330,7 @@ def main():
 
     # set the y-spine
     ax.spines['bottom'].set_position('zero')
+
 
     # turn off the top spine/ticks
     ax.spines['top'].set_color('none')
