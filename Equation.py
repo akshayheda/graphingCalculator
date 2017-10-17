@@ -339,6 +339,7 @@ def main():
     plt.yticks(fontsize = 8)
     plt.xticks(np.arange(xmin, xmax + 1, xScale))
     plt.yticks(np.arange(ymin, ymax + 1, yScale))
+
     plt.show()
 
 if __name__ == "__main__":
