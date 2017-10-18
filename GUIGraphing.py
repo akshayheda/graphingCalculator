@@ -1,22 +1,15 @@
-# The code for changing pages was derived from: http://stackoverflow.com/questions/7546050/switch-between-two-frames-in-tkinter
-# License: http://creativecommons.org/licenses/by-sa/3.0/
-
-import matplotlib
+from __future__ import division
+from math import *
+import math
 import matplotlib.pyplot as plt
-matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
-from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
-from matplotlib import style
 import numpy as np
 import tkinter as tk
-from tkinter import ttk
 from tkinter import *
-import math
 from Equation import Equation
 
 LARGE_FONT = ("Verdana", 12)
-#style.use("ggplot")
 
 fig, ax = plt.subplots()
 
@@ -39,16 +32,21 @@ def animate(i):
     eq = eq.replace("cot(", "(1)/tan(")
 
     try:
-
         func = compile(eq, "temp.py", "eval")
 
         x = 0
         eval(func)
         compiledSuccess = True
+    except ZeroDivisionError:
+        compiledSuccess = True
+    except ValueError:
+        compiledSuccess = True
     except SyntaxError:
         compiledSuccess = False
+        print("CHECK FUNCTION: ERROR!!!")
     except NameError:
         compiledSuccess = False
+        print("CHECK FUNCTION: ERROR!!!")
 
 
 
@@ -63,6 +61,8 @@ def animate(i):
     yScale = 1
 
     if(len(eq) > 0 and not(eqPrev == eq) and compiledSuccess):
+        print("Reseting")
+        ax.cla()
         compiledSuccess = False
         eqPrev = eq
 
@@ -73,9 +73,9 @@ def animate(i):
         ax.plot(Y.getDomain(), Y.getYDeriv(), "blue")
         ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
 
-        plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=75, facecolors='none', edgecolors='purple')
-        plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="orange", s=75)
-        plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=75)
+        plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=100, facecolors='none', edgecolors='purple')
+        plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="orange", s=50)
+        plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=50)
 
     ax.set_ylim([ymin, ymax])
 
@@ -94,13 +94,13 @@ def animate(i):
     # turn off the top spine/ticks
     ax.spines['top'].set_color('none')
     ax.xaxis.tick_bottom()
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
+    plt.xticks(fontsize=10)
+    plt.yticks(fontsize=10)
     plt.xticks(np.arange(xmin, xmax + 1, xScale))
     plt.yticks(np.arange(ymin, ymax + 1, yScale))
 
 
-class SeaofBTCapp(tk.Tk):
+class GraphingCalculator(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -161,6 +161,6 @@ class GraphPage(tk.Frame):
         canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 
-app = SeaofBTCapp()
+app = GraphingCalculator()
 ani = animation.FuncAnimation(fig, animate, interval=1000)
 app.mainloop()
