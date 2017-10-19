@@ -79,6 +79,9 @@ def animate(i):
     boundEvalChange = False
 
     if( not(str(xminPrev) == str(xmin))) or not (str(xmaxPrev) == str(xmax) or not(str(yminPrev) == str(ymin))) or not (str(ymaxPrev) == str(ymax) ):
+
+
+
         boundEvalChange = True
 
         print("xMin " + str(xminPrev) + " | " + str(xmin))
@@ -93,7 +96,24 @@ def animate(i):
 
         print("\n")
 
-    if((len(eq) > 0 and not(eqPrev == eq) and compiledSuccess) or boundEvalChange):
+    try:
+        func = compile(eq, "temp.py", "eval")
+
+        x = 0
+        eval(func)
+        compiledSuccess = True
+    except ZeroDivisionError:
+        compiledSuccess = True
+    except ValueError:
+        compiledSuccess = True
+    except SyntaxError:
+        compiledSuccess = False
+        print("CHECK FUNCTION: ERROR!!!")
+    except NameError:
+        compiledSuccess = False
+        print("CHECK FUNCTION: ERROR!!!")
+
+    if((len(eq) > 0 and not(eqPrev == eq) and compiledSuccess) or (boundEvalChange) and compiledSuccess):
         print(boundEvalChange)
 
         boundEvalChange = False
