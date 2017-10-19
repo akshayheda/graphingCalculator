@@ -13,18 +13,23 @@ LARGE_FONT = ("Verdana", 12)
 
 fig, ax = plt.subplots()
 
-Xmin = -10
-Xmax = 10
-Ymin = -10
-Ymax = 10
+Xmin = -10.0
+Xmax = 10.0
+Ymin = -10.0
+Ymax = 10.0
 resolution = 0.001
 compiledSuccess = False
 
 eq = ""
 eqPrev = "memes"
+xminPrev = -10.0
+xmaxPrev = 10.0
+yminPrev = -10.0
+ymaxPrev = 10.0
 
 def animate(i):
     global eq
+
     eq = eq.lower()
     eq = eq.replace("^", "**")
     eq = eq.replace("sec(", "(1)/cos(")
@@ -52,15 +57,49 @@ def animate(i):
 
     global eqPrev
 
+    global Xmin
+    global Xmax
+    global Ymin
+    global Ymax
 
-    xmin = -10
-    xmax = 10
-    ymin = -10
-    ymax = 10
+    global xminPrev
+    global xmaxPrev
+    global yminPrev
+    global ymaxPrev
+
+    xmin = Xmin
+    xmax = Xmax
+    ymin = Ymin
+    ymax = Ymax
     xScale = 1
     yScale = 1
 
-    if(len(eq) > 0 and not(eqPrev == eq) and compiledSuccess):
+
+
+    boundEvalChange = False
+
+    if( not(str(xminPrev) == str(xmin))) or not (str(xmaxPrev) == str(xmax) or not(str(yminPrev) == str(ymin))) or not (str(ymaxPrev) == str(ymax) ):
+        boundEvalChange = True
+
+        print("xMin " + str(xminPrev) + " | " + str(xmin))
+        print("xMax " + str(xmaxPrev) + " | " + str(xmax))
+        print("yMin " + str(yminPrev) + " | " + str(ymin))
+        print("yMax " + str(ymaxPrev) + " | " + str(ymax))
+
+        xminPrev = xmin
+        xmaxPrev = xmax
+        yminPrev = ymin
+        ymaxPrev = ymax
+
+        print("\n")
+
+    if((len(eq) > 0 and not(eqPrev == eq) and compiledSuccess) or boundEvalChange):
+        print(boundEvalChange)
+
+        boundEvalChange = False
+
+        print(len(eq))
+
         print("Reseting")
         ax.cla()
         compiledSuccess = False
@@ -74,8 +113,9 @@ def animate(i):
         ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
 
         plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=100, facecolors='none', edgecolors='purple')
-        plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="orange", s=50)
-        plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=50)
+        plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="orange", s=100)
+        plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=100)
+        print(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1])
 
     ax.set_ylim([ymin, ymax])
 
@@ -131,18 +171,59 @@ class GraphingCalculator(tk.Tk):
 
 class GraphPage(tk.Frame):
     global eq
+    global label
+
+    global Xmax
+    global Xmin
+    global xminEntry
+    global xmaxEntry
+
+    global Ymax
+    global Ymin
+    global yminEntry
+    global ymaxEntry
+
     def updateFunction(self):
+        global label
         global eq
+        global Xmax
+        global Xmin
+        global Ymax
+        global Ymin
+
         func = e1.get()
         print("Trying to update")
         eq = func
         print(eq)
+        if(len(xminEntry.get()) > 0):
+            Xmin = float(xminEntry.get())
+        else:
+            Xmin = -10.0
+
+        if (len(xmaxEntry.get()) > 0):
+            Xmax = float(xmaxEntry.get())
+        else:
+            Xmax = 10.0
+
+        if (len(yminEntry.get()) > 0):
+            Ymin = float(yminEntry.get())
+        else:
+            Ymin = -10.0
+
+        if (len(ymaxEntry.get()) > 0):
+            Ymax = float(ymaxEntry.get())
+        else:
+            Ymax = 10.0
+
 
 
     def __init__(self, parent, controller):
+        global eq
         tk.Frame.__init__(self, parent)
-        label = tk.Label(self, text="Graph Page!", font=LARGE_FONT)
+
+        label = tk.Label(self, text="Graphing Calculator ", font=LARGE_FONT)
         label.pack(pady=10, padx=10)
+
 
 
         global e1
@@ -151,7 +232,31 @@ class GraphPage(tk.Frame):
         e1.pack()
         e1.focus_set()
 
-        button1 = Button(self, text="Update",command=self.updateFunction )
+        global xminEntry
+        xminEntry = Entry(self)
+
+        xminEntry.pack()
+        xminEntry.focus_set()
+
+        global xmaxEntry
+        xmaxEntry = Entry(self)
+
+        xmaxEntry.pack()
+        xmaxEntry.focus_set()
+
+        global yminEntry
+        yminEntry = Entry(self)
+
+        yminEntry.pack()
+        yminEntry.focus_set()
+
+        global ymaxEntry
+        ymaxEntry = Entry(self)
+
+        ymaxEntry.pack()
+        ymaxEntry.focus_set()
+
+        button1 = Button(self, text="Graph!",command=self.updateFunction )
         button1.pack()
 
         canvas = FigureCanvasTkAgg(fig, self)
