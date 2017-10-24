@@ -1,13 +1,15 @@
 from __future__ import division
 from math import *
 import math
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 import numpy as np
 import tkinter as tk
 from tkinter import *
-from Equation import Equation
+from graphingCalculator.Equation import Equation
 
 LARGE_FONT = ("Verdana", 12)
 
