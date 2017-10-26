@@ -9,7 +9,7 @@ import matplotlib.animation as animation
 import numpy as np
 import tkinter as tk
 from tkinter import *
-from graphingCalculator.Equation import Equation
+from Equation import Equation
 
 LARGE_FONT = ("Verdana", 12)
 
@@ -243,49 +243,56 @@ class GraphPage(tk.Frame):
         global eq
         tk.Frame.__init__(self, parent)
 
-        label = tk.Label(self, text="Graphing Calculator ", font=LARGE_FONT)
-        label.pack(pady=10, padx=10)
-
-
+        self.mainTitleText = StringVar()
+        self.mainTitleText.set('Graphing Calculator')
+        self.mainTitle = Label(self, text=self.mainTitleText.get())
+        self.mainTitle.grid(row=0)
 
         global e1
         e1 = Entry(self)
-
-        e1.pack()
-        e1.focus_set()
+        e1.grid(row=1, column=1)
+        EquationLabel = Label(self, text="f(x) =")
+        EquationLabel.grid(row=1, column=0)
 
         global xminEntry
         xminEntry = Entry(self)
+        xminEntry.grid(row=2, column=1)
 
-        xminEntry.pack()
-        xminEntry.focus_set()
+        xminLabel = Label(self, text="Xmin:")
+        xminLabel.grid(row=2, column=0)
 
         global xmaxEntry
         xmaxEntry = Entry(self)
+        xmaxEntry.grid(row=3, column=1)
 
-        xmaxEntry.pack()
-        xmaxEntry.focus_set()
+        xmaxLabel = Label(self, text="Xmax:")
+        xmaxLabel.grid(row=3, column=0)
 
         global yminEntry
         yminEntry = Entry(self)
+        yminEntry.grid(row=4, column=1)
 
-        yminEntry.pack()
-        yminEntry.focus_set()
+        yminLabel = Label(self, text="Ymin:")
+        yminLabel.grid(row=4, column=0)
 
         global ymaxEntry
         ymaxEntry = Entry(self)
+        ymaxEntry.grid(row=5, column=1)
 
-        ymaxEntry.pack()
-        ymaxEntry.focus_set()
+        ymaxLabel = Label(self, text="Ymax:")
+        ymaxLabel.grid(row=5, column=0)
 
-        button1 = Button(self, text="Graph!",command=self.updateFunction )
-        button1.pack()
+        button1 = Button(self, text="Graph!", command=self.updateFunction)
+        button1.grid(row=6)
 
-        canvas = FigureCanvasTkAgg(fig, self)
+        graphingFrame = Frame(self)
+        canvas = FigureCanvasTkAgg(fig, graphingFrame)
+
         canvas.show()
-        canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+        canvas.get_tk_widget().grid(row=7)
 
-        canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+        canvas._tkcanvas.grid(row=8)
+        graphingFrame.grid(row = 7, column = 2)
 
 
 app = GraphingCalculator()
