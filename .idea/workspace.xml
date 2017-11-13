@@ -29,8 +29,8 @@
       <file leaf-file-name="Equation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Equation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6567">
-              <caret line="203" column="83" lean-forward="false" selection-start-line="203" selection-start-column="83" selection-end-line="203" selection-end-column="83" />
+            <state relative-caret-position="1401">
+              <caret line="226" column="72" lean-forward="false" selection-start-line="226" selection-start-column="72" selection-end-line="226" selection-end-column="72" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -41,22 +41,10 @@
       <file leaf-file-name="GUIGraphingNew.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUIGraphingNew.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="14553">
-              <caret line="441" column="8" lean-forward="false" selection-start-line="441" selection-start-column="8" selection-end-line="441" selection-end-column="23" />
+            <state relative-caret-position="297">
+              <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checktest.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/checktest.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -78,6 +66,9 @@
       <find>ani</find>
       <find>Tk</find>
       <find>pack</find>
+      <find>scatter</find>
+      <find>print(</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,8 +82,8 @@
         <option value="$PROJECT_DIR$/math.py" />
         <option value="$PROJECT_DIR$/GUIGraphingOld.py" />
         <option value="$PROJECT_DIR$/GUIGraphing.py" />
-        <option value="$PROJECT_DIR$/Equation.py" />
         <option value="$PROJECT_DIR$/checktest.py" />
+        <option value="$PROJECT_DIR$/Equation.py" />
         <option value="$PROJECT_DIR$/GUIGraphingNew.py" />
       </list>
     </option>
@@ -105,8 +96,8 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-13" />
-    <option name="y" value="88" />
-    <option name="width" value="3014" />
+    <option name="y" value="-13" />
+    <option name="width" value="3026" />
     <option name="height" value="1946" />
   </component>
   <component name="ProjectView">
@@ -138,8 +129,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,10 +343,10 @@
     <option name="totallyTimeSpent" value="310000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="88" width="3014" height="1946" extended-state="1" />
+    <frame x="-13" y="-13" width="3026" height="1946" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26539493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26433334" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3129683" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -421,13 +412,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/GUIGraphingNew.py</url>
-          <line>24</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
@@ -743,22 +727,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Equation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6567">
-          <caret line="203" column="83" lean-forward="false" selection-start-line="203" selection-start-column="83" selection-end-line="203" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/checktest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="8" column="43" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="43" />
           <folding>
-            <element signature="e#0#21#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -778,10 +752,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Equation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1401">
+          <caret line="226" column="72" lean-forward="false" selection-start-line="226" selection-start-column="72" selection-end-line="226" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUIGraphingNew.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="14553">
-          <caret line="441" column="8" lean-forward="false" selection-start-line="441" selection-start-column="8" selection-end-line="441" selection-end-column="23" />
+        <state relative-caret-position="297">
+          <caret line="204" column="0" lean-forward="true" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
