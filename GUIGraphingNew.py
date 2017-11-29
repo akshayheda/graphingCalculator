@@ -19,16 +19,22 @@ Xmin = -10.0
 Xmax = 10.0
 Ymin = -10.0
 Ymax = 10.0
+A = 0.0
+B = 0.0
 resolution = 0.001
 compiledSuccess = False
 
 ErrorLog = ""
 eq = ""
+eqPrev = ""
 xminPrev = -10.0
 xmaxPrev = 10.0
 yminPrev = -10.0
 ymaxPrev = 10.0
+Aprev = 0.0
+Bprev = 0.0
 
+integral = 0.0
 
 def parse():
     global eq
@@ -158,15 +164,25 @@ def animate(i):
     global Ymin
     global Ymax
 
+    global A
+    global B
+
     global xminPrev
     global xmaxPrev
     global yminPrev
     global ymaxPrev
 
+    global integral
+    global Aprev
+    global Bprev
+
     xmin = Xmin
     xmax = Xmax
     ymin = Ymin
     ymax = Ymax
+
+    AprevTemp = A
+    BprevTemp = B
 
     xScale = 1
     yScale = 1
@@ -176,26 +192,44 @@ def animate(i):
     boundEvalChange = False
 
     if( not(str(xminPrev) == str(xmin))) or not (str(xmaxPrev) == str(xmax) or not(str(yminPrev) == str(ymin))) or not \
-            (str(ymaxPrev) == str(ymax)):
+            str(ymaxPrev) == str(ymax) or not(str(Aprev) == str(AprevTemp))or not (str(Bprev) == str(BprevTemp)):
 
 
 
         boundEvalChange = True
 
-        eqPrev = eq
         xminPrev = xmin
         xmaxPrev = xmax
         yminPrev = ymin
         ymaxPrev = ymax
+        Aprev = AprevTemp
+        Bprev = BprevTemp
 
+    global eqPrev
 
-    if((len(eq) > 0 and compiledSuccess) or (boundEvalChange) and compiledSuccess):
+    eqPrevTemp = eq
+    eqChange = False
+
+    if (not (str(eqPrev) == str(eqPrevTemp))):
+        eqChange = True
+
+        eqPrev = eqPrevTemp
+
+    if((eqChange and compiledSuccess) or ((boundEvalChange) and compiledSuccess)):
+
+        print("New Function: f(x) = ", eq)
+        print("Function or Bounds Changed: Updating Graph...")
+
 
         boundEvalChange = False
         compiledSuccess = False
+        eqChange = False
         ax.cla()
 
-        Y = Equation(eq, xmin, xmax)
+        Y = Equation(eq, xmin, xmax, ymin, ymax)
+
+        global integral
+        integral = Y.Integrate(A, B, 0)
 
         ax.plot(Y.getDomain(), Y.getYFunction(), "red")
 
@@ -207,8 +241,8 @@ def animate(i):
         plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
-        integral = Y.Integrate(xmin, xmax,0)
-        #print(integral)
+        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) is " , integral)
+        print("|-^-^-^-^-^-^-^-^-^-^-^-|", eq,"|-^-^-^-^-^-^-^-^-^-^-^-|" + "\n")
 
     ax.set_ylim([ymin, ymax])
 
@@ -276,6 +310,13 @@ class GraphPage(tk.Frame):
     global yminEntry
     global ymaxEntry
 
+    global A
+    global B
+    global AEntry
+    global BEntry
+
+    global integral
+
     def updateFunction(self):
         global label
         global eq
@@ -284,6 +325,8 @@ class GraphPage(tk.Frame):
         global Ymax
         global Ymin
 
+        global A
+        global B
 
 
 
@@ -309,6 +352,26 @@ class GraphPage(tk.Frame):
             Ymax = float(ymaxEntry.get())
         else:
             Ymax = 10.0
+
+        if (len(AEntry.get()) > 0):
+            A = float(AEntry.get())
+        else:
+            A = 0
+
+        if (len(BEntry.get()) > 0):
+            B = float(BEntry.get())
+        else:
+            B = 0
+
+        IntegralLabelText = Label(self, text="Integral from A to B =")
+        IntegralLabelText.grid(row=8, column=0)
+
+        global integral
+
+        integral = 0
+        IntegralLabel = Label(self, text=integral)
+        IntegralLabel.grid(row=8, column=1)
+
 
 
     def __init__(self, parent, controller):
@@ -354,9 +417,26 @@ class GraphPage(tk.Frame):
         ymaxLabel = Label(self, text="Ymax:")
         ymaxLabel.grid(row=5, column=0)
 
+        global AEntry
+        AEntry = Entry(self)
+        AEntry.grid(row=6, column=1)
 
-        button1 = Button(self, text="Graph!", command=self.updateFunction)
-        button1.grid(row=10)
+        ALabel = Label(self, text="Lower Limit (A):")
+        ALabel.grid(row=6, column=0)
+
+        global BEntry
+        BEntry = Entry(self)
+        BEntry.grid(row=7, column=1)
+
+        BLabel = Label(self, text="Upper Limit (B):")
+        BLabel.grid(row=7, column=0)
+
+
+        button1 = Button(self, text="Graph", command=self.updateFunction)
+        button1.grid(row=10, column = 0)
+
+        button1 = Button(self, text="Refresh Integral", command=self.updateFunction)
+        button1.grid(row=10, column = 1)
 
         graphingFrame = Frame(self)
         canvas = FigureCanvasTkAgg(fig, graphingFrame)
@@ -371,5 +451,5 @@ class GraphPage(tk.Frame):
 
 
 app = GraphingCalculator()
-ani = animation.FuncAnimation(fig, animate, interval=1000)
+ani = animation.FuncAnimation(fig, animate, interval=250)
 app.mainloop()

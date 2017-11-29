@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 class Equation:
 
-    def __init__(self, Expression = "", Xmin = -10, Xmax = 10, resolution = -1 ):
+    def __init__(self, Expression = "", Xmin = -10, Xmax = 10,Ymin = -10, Ymax = 10, resolution = -1 ):
 
         '''
 
@@ -15,6 +15,8 @@ class Equation:
         :param Expression:
         :param Xmin:
         :param Xmax:
+        :param Ymin:
+        :param Ymax:
         :param resolution:
 
         The Equation contructor will generate all aspects of the equation in one shot once it is created. From there
@@ -28,6 +30,8 @@ class Equation:
         #Initialize the instrance variables used in the main functions from the contructor parameters
         self.Xmin = Xmin
         self.Xmax = Xmax
+        self.Ymin = Ymin
+        self.Ymax = Ymax
         if(resolution == -1):
             self.resolution = ((Xmax - Xmin) / 20000)
         else:
@@ -128,6 +132,7 @@ class Equation:
     #@param level: can be 0 for function, 1 for derivative, or 2 for second derivative
     def generateFunction(self, level):
         yvals = []
+        xIndex = 0
         if(level == 0):
             for i in self.Domain:
                 yvals.append(self.evaluate(i))
@@ -165,8 +170,12 @@ class Equation:
         h = 0.0001
         y2 = self.evaluate(xval+h)
         y1 = self.evaluate(xval-h)
+        y = self.evaluate(xval)
+        if (isnan(y)):
+            return np.nan
+        deriv = (y2 - y1) / (2 * h)
         #If function is undefined at the point, then the derivative is undefined
-        if(y1==np.nan or y2 == np.nan):
+        if(y1==np.nan or y2 == np.nan or deriv == np.nan or self.evaluate(xval) == np.nan):
             deriv = np.nan
         #derivative is the slope between two points that are very close to each other
         else:
@@ -210,22 +219,24 @@ class Equation:
         HoleY = []
 
         #Iterate through each y value, excluding the first and last y value to prevent index errors
+
         for i in range(1, len(self.Domain)-2):
 
             #checks if y value is undefined
+
             if math.isnan(self.YFunction[i]):
 
                 yPrev = self.YFunction[i - 1]
                 yNext = self.YFunction[i + 1]
-                print(str(self.Domain[i-1]) + " " + str(yPrev) + " ")
-                print(str(self.Domain[i]) + " " + str(self.YFunction[i]))
-                print(str(self.Domain[i+1]) + " " + str(yNext))
+
                 #if y value is undefined, checks if previous and next value are undefined as well
                 if(not(math.isnan(yPrev)) and not(math.isnan(yNext))):
-                    # if they are not undefined, then there is a hole
-                    HoleX.append(self.Domain[i])
-                    #approximate the y value of the hole by taking average of previous and next y value
-                    HoleY.append((yPrev + yNext) /2)
+                    if(abs(yPrev - yNext) < 1):
+                        #if they are not undefined, then there is a hole
+                        HoleX.append(self.Domain[i])
+                        #approximate the y value of the hole by taking average of previous and next y value
+                        HoleY.append((yPrev + yNext) /2)
+
 
         return [HoleX, HoleY]
 
