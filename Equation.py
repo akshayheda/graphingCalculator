@@ -205,14 +205,14 @@ class Equation:
 
     def integrate(self, a, b, level):
         if(a==b):
-            return 0;
-            if (b > a):
-                return nsimpson(a, b, level)
-            if (a > b):
-                temp = b
-                b = a
-                a = temp
-                return -1 * nsimpson(a, b, level)
+            return 0
+        if (b > a):
+            return self.nsimpson(a, b, level)
+        if (a > b):
+            temp = b
+            b = a
+            a = temp
+            return -1 * self.nsimpson(a, b, level)
 
     def nsimpson(self, a, b, level):
             n = ((b-a) * 30) + 150

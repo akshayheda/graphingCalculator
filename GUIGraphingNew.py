@@ -242,8 +242,8 @@ def animate(i):
         plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
-        integral = Y.nsimpson(A, B, 1000)
-        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , round(integral,5))
+        integral = Y.integrate(A, B, 1)
+        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , str(round(integral,5)))
         print("Showing FTC...")
         print("f(", str(B) + " ) -  f(", str(A) + " ) = ", str(round(Y.evaluate(B) - Y.evaluate(A),5 )))
         print("|-^-^-^-^-^-^-^-^-^-^-^-|", eq,"|-^-^-^-^-^-^-^-^-^-^-^-|" + "\n")
