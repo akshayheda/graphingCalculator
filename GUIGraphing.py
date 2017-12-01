@@ -139,6 +139,8 @@ def animate(i):
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="black", s=100)
         print(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1])
 
+        app.update()
+
     ax.set_ylim([ymin, ymax])
 
     ax.grid(False, which='both')

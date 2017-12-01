@@ -13,9 +13,12 @@ import plotly.plotly as py
 import plotly.graph_objs as go
 from Equation import Equation
 
+
 LARGE_FONT = ("Verdana", 12)
 
 fig, ax = plt.subplots()
+
+Y = "ReplacedWithFunction"
 
 Xmin = -10.0
 Xmax = 10.0
@@ -36,8 +39,9 @@ ymaxPrev = 10.0
 Aprev = 0.0
 Bprev = 0.0
 
+FTC = 0.0
 integral = 0.0
-
+app = 0
 def parse():
     global eq
 
@@ -227,7 +231,7 @@ def animate(i):
         compiledSuccess = False
         eqChange = False
         ax.cla()
-
+        global Y
         Y = Equation(eq, xmin, xmax, ymin, ymax)
 
         global integral
@@ -251,36 +255,44 @@ def animate(i):
         else:
             integral = round(integral,5)
 
+        global FTC
+        FTC = round(Y.evaluate(B) - Y.evaluate(A), 5)
+
         print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , str(integral))
         print("Showing FTC...")
         print("f(", str(B) + " ) -  f(", str(A) + " ) = ", str(round(Y.evaluate(B) - Y.evaluate(A),5 )))
         print("|-^-^-^-^-^-^-^-^-^-^-^-|", eq,"|-^-^-^-^-^-^-^-^-^-^-^-|" + "\n")
 
-    ax.set_ylim([ymin, ymax])
+        ax.set_ylim([ymin, ymax])
 
-    ax.grid(False, which='both')
+        ax.grid(False, which='both')
 
-    # set the x-spine (see below for more info on `set_position`)
-    ax.spines['left'].set_position('zero')
+        # set the x-spine (see below for more info on `set_position`)
+        ax.spines['left'].set_position('zero')
 
-    # turn off the right spine/ticks
-    ax.spines['right'].set_color('none')
-    ax.yaxis.tick_left()
+        # turn off the right spine/ticks
+        ax.spines['right'].set_color('none')
+        ax.yaxis.tick_left()
 
-    # set the y-spine
-    ax.spines['bottom'].set_position('zero')
+        # set the y-spine
+        ax.spines['bottom'].set_position('zero')
 
-    # turn off the top spine/ticks
-    ax.spines['top'].set_color('none')
-    ax.xaxis.tick_bottom()
-    plt.xticks(fontsize=10)
-    plt.yticks(fontsize=10)
-    plt.xticks(np.arange(xmin, xmax + 1, xScale))
-    plt.yticks(np.arange(ymin, ymax + 1, yScale))
+        # turn off the top spine/ticks
+        ax.spines['top'].set_color('none')
+        ax.xaxis.tick_bottom()
+        plt.xticks(fontsize=10)
+        plt.yticks(fontsize=10)
+        plt.xticks(np.arange(xmin, xmax + 1, xScale))
+        plt.yticks(np.arange(ymin, ymax + 1, yScale))
 
-    plt.savefig("graph.svg", dpi = 1000)
+        plt.savefig("graph.svg", dpi = 1000)
+        global app
+        app.getFrame().updateFunction()
 
 class GraphingCalculator(tk.Tk):
+
+
+
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -295,17 +307,20 @@ class GraphingCalculator(tk.Tk):
         self.frames = {}
 
 
-        frame = GraphPage(container, self)
+        self.frame = GraphPage(container, self)
 
-        self.frames[GraphPage] = frame
+        self.frames[GraphPage] = self.frame
 
-        frame.grid(row=0, column=0, sticky="nsew")
+        self.frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(GraphPage)
 
     def show_frame(self, cont):
         frame = self.frames[cont]
         frame.tkraise()
+
+    def getFrame(self):
+        return self.frame
 
 
 
@@ -328,7 +343,9 @@ class GraphPage(tk.Frame):
     global AEntry
     global BEntry
 
+    global Y
     global integral
+    global FTC
 
     def updateFunction(self):
         global label
@@ -381,11 +398,20 @@ class GraphPage(tk.Frame):
 
         global integral
 
-        integral = 0
         IntegralLabel = Label(self, text=integral)
         IntegralLabel.grid(row=8, column=1)
 
+        global Y
 
+        FTCL = "f(" + str(B) + ") -  f(" + str(A) + ") = "
+
+        FTCLabelText = Label(self, text=FTCL)
+        FTCLabelText.grid(row=9, column=0)
+
+        FTC = round(Y.evaluate(B) - Y.evaluate(A),5 )
+
+        FTCLabel = Label(self, text= str(FTC))
+        FTCLabel.grid(row=9, column=1)
 
     def __init__(self, parent, controller):
         global eq
@@ -448,9 +474,6 @@ class GraphPage(tk.Frame):
         button1 = Button(self, text="Graph", command=self.updateFunction)
         button1.grid(row=10, column = 0)
 
-        button1 = Button(self, text="Refresh Integral", command=self.updateFunction)
-        button1.grid(row=10, column = 1)
-
         graphingFrame = Frame(self)
         canvas = FigureCanvasTkAgg(fig, graphingFrame)
 
@@ -459,6 +482,26 @@ class GraphPage(tk.Frame):
 
         canvas._tkcanvas.grid(row=2)
         graphingFrame.grid(row =11, column = 2)
+
+        IntegralLabelText = Label(self, text="Integral from A to B =")
+        IntegralLabelText.grid(row=8, column=0)
+
+        global integral
+
+        IntegralLabel = Label(self, text=integral)
+        IntegralLabel.grid(row=8, column=1)
+
+        global Y
+
+        FTCL = "f(" + str(B) + ") -  f(" + str(A) + ") = "
+
+        FTCLabelText = Label(self, text=FTCL)
+        FTCLabelText.grid(row=9, column=0)
+
+        global FTC
+
+        FTCLabel = Label(self, text=str(FTC))
+        FTCLabel.grid(row=9, column=1)
 
 
 

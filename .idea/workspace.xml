@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="468e04d5-1686-4ef1-ab2a-07aa4a6d315b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/graphingCalculator.iml" afterPath="$PROJECT_DIR$/.idea/graphingCalculator.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Equation.py" afterPath="$PROJECT_DIR$/Equation.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUIGraphing.py" afterPath="$PROJECT_DIR$/GUIGraphing.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GUIGraphingNew.py" afterPath="$PROJECT_DIR$/GUIGraphingNew.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/graph.svg" afterPath="$PROJECT_DIR$/graph.svg" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,8 +21,8 @@
       <file leaf-file-name="Equation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Equation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="159" column="20" lean-forward="true" selection-start-line="159" selection-start-column="20" selection-end-line="159" selection-end-column="20" />
+            <state relative-caret-position="-759">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
@@ -33,21 +33,11 @@
       <file leaf-file-name="GUIGraphingNew.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GUIGraphingNew.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="692">
-              <caret line="278" column="39" lean-forward="false" selection-start-line="278" selection-start-column="39" selection-end-line="278" selection-end-column="39" />
+            <state relative-caret-position="330">
+              <caret line="477" column="49" lean-forward="false" selection-start-line="477" selection-start-column="49" selection-end-line="477" selection-end-column="49" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="graph.svg" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/graph.svg">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="4" column="83" lean-forward="false" selection-start-line="4" selection-start-column="83" selection-end-line="4" selection-end-column="83" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -84,11 +74,11 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/math.py" />
         <option value="$PROJECT_DIR$/GUIGraphingOld.py" />
-        <option value="$PROJECT_DIR$/GUIGraphing.py" />
         <option value="$PROJECT_DIR$/checktest.py" />
+        <option value="$PROJECT_DIR$/graph.svg" />
+        <option value="$PROJECT_DIR$/GUIGraphing.py" />
         <option value="$PROJECT_DIR$/Equation.py" />
         <option value="$PROJECT_DIR$/GUIGraphingNew.py" />
-        <option value="$PROJECT_DIR$/graph.svg" />
       </list>
     </option>
   </component>
@@ -119,8 +109,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -135,6 +123,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -320,10 +310,10 @@
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.GUIGraphingNew" />
-        <item index="1" class="java.lang.String" itemvalue="Python.checktest" />
-        <item index="2" class="java.lang.String" itemvalue="Python.GUIGraphingOld" />
-        <item index="3" class="java.lang.String" itemvalue="Python.GUIGraphing" />
-        <item index="4" class="java.lang.String" itemvalue="Python.Equation" />
+        <item index="1" class="java.lang.String" itemvalue="Python.GUIGraphing" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Equation" />
+        <item index="3" class="java.lang.String" itemvalue="Python.checktest" />
+        <item index="4" class="java.lang.String" itemvalue="Python.GUIGraphingOld" />
       </list>
     </recent_temporary>
   </component>
@@ -703,13 +693,6 @@
     </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2017.2/system/python_stubs/-1451482807/builtins.py" />
     <entry file="file://$PROJECT_DIR$/math.py" />
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/GUIGraphingOld.py" />
     <entry file="file://$PROJECT_DIR$/checktest.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -733,17 +716,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6436">
+          <caret line="144" column="12" lean-forward="true" selection-start-line="144" selection-start-column="12" selection-end-line="144" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/GUIGraphing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2820">
-          <caret line="127" column="19" lean-forward="true" selection-start-line="127" selection-start-column="19" selection-end-line="127" selection-end-column="19" />
+        <state relative-caret-position="697">
+          <caret line="142" column="0" lean-forward="true" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Equation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="159" column="20" lean-forward="true" selection-start-line="159" selection-start-column="20" selection-end-line="159" selection-end-column="20" />
+        <state relative-caret-position="-759">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -752,16 +743,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/graph.svg">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="4" column="83" lean-forward="false" selection-start-line="4" selection-start-column="83" selection-end-line="4" selection-end-column="83" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1512165689764" expanded="true" signature="29367:29454" ph="..." />
+            <marker date="1512165689764" expanded="true" signature="29368:29445" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GUIGraphingNew.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="692">
-          <caret line="278" column="39" lean-forward="false" selection-start-line="278" selection-start-column="39" selection-end-line="278" selection-end-column="39" />
+        <state relative-caret-position="330">
+          <caret line="477" column="49" lean-forward="false" selection-start-line="477" selection-start-column="49" selection-end-line="477" selection-end-column="49" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
