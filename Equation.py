@@ -229,8 +229,6 @@ class Equation:
 
         IntegrationDomain = []
 
-
-
         accumulator = 0
 
         if( a < b):
@@ -242,7 +240,6 @@ class Equation:
                 IntegrationDomain.append(i)
                 i += 0.01
 
-            print("Case 1")
             index = 0
 
             for d in IntegrationDomain:
@@ -267,7 +264,6 @@ class Equation:
                 IntegrationDomain.append(i)
                 i += 0.01
 
-            print("Case 2")
             index = 0
 
             for d in IntegrationDomain:
@@ -279,7 +275,6 @@ class Equation:
 
 
         if (a == b):
-            print("Case 3")
             return 0
 
 

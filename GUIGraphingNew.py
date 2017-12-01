@@ -229,8 +229,8 @@ def animate(i):
         Y = Equation(eq, xmin, xmax, ymin, ymax)
 
         global integral
-        integral = Y.AccurateIntegration(A, B, 0)
-        inaccurateIntegral = Y.Integrate(A, B, 0)
+        integral = Y.AccurateIntegration(A, B, 1)
+        inaccurateIntegral = Y.Integrate(A, B, 1)
 
         ax.plot(Y.getDomain(), Y.getYFunction(), "red")
 
@@ -242,7 +242,9 @@ def animate(i):
         plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
-        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) is " , integral, inaccurateIntegral)
+        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , integral)
+        print("Showing FTC...")
+        print("f(", str(B) + " ) -  f(", str(A) + " ) = ", str(Y.evaluate(B) - Y.evaluate(A)))
         print("|-^-^-^-^-^-^-^-^-^-^-^-|", eq,"|-^-^-^-^-^-^-^-^-^-^-^-|" + "\n")
 
     ax.set_ylim([ymin, ymax])
