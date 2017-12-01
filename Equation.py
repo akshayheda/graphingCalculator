@@ -201,110 +201,43 @@ class Equation:
         return secondDeriv
 
     #Uses Simpson's 3/8th rule for precise integral estimation
-    def Integrate(self, a, b, level):
+    # integral = ((b-a)/8) [f(a) + 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
 
-
-
-        i = a
-        while i <= b:
-
-            i += self.resolution
-
-
-
-
-        # integral = ((b-a)/8) [f(a) + 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
-        if level == 0:
-            return ((b-a)/8)*(self.evaluate(a) + 3*self.evaluate(((2*a)+b)/3)
-                              + 3*self.evaluate((a + (2*b))/3) + self.evaluate(b))
-        if level == 1:
-            return ((b-a)/8)*(self.deriv(a) + 3*self.deriv(((2*a)+b)/3)
-                              + 3*self.deriv((a + (2*b))/3) + self.deriv(b))
-        if level == 2:
-            return ((b-a)/8)*(self.secondDeriv(a) + 3*self.secondDeriv(((2*a)+b)/3)
-                              + 3*self.secondDeriv((a + (2*b))/3) + self.secondDeriv(b))
-
-
-    def AccurateIntegration(self, a, b, level):
-
-        IntervalResolution = round(abs(a-b)/1000,3)
-        print(IntervalResolution)
-        IntegrationDomain = []
-
-        accumulator = 0
-
-        if( a < b):
-
-            i = a
-
-            while i <= b:
-                i = round(i, 3)
-                IntegrationDomain.append(i)
-                i += IntervalResolution
-
-            index = 0
-
-            for d in IntegrationDomain:
-                if (index < len(IntegrationDomain) - 1):
-
-                    accumulator += self.Integrate(d, round(d+IntervalResolution,3), level)
-                    index+=1
-
-
-            return accumulator
-
-        if (a > b):
-
-            temp = b
-            b = a
-            a = temp
-
-            i = a
-
-            while i <= b:
-                i = round(i, 3)
-                IntegrationDomain.append(i)
-                i += IntervalResolution
-
-            index = 0
-
-            for d in IntegrationDomain:
-                if (index < len(IntegrationDomain) - 1):
-                    accumulator += self.Integrate(d, round(d + IntervalResolution, 3), level)
-                    index += 1
-
-            return -1 * accumulator
-
-
-        if (a == b):
-            return 0
-
-    def nsimpson(self, a, b, i):
+    def integrate(self, a, b, level):
         if(a==b):
             return 0;
-        if(b > a):
-            n = i*3
+            if (b > a):
+                return nsimpson(a, b, level)
+            if (a > b):
+                temp = b
+                b = a
+                a = temp
+                return -1 * nsimpson(a, b, level)
+            
+    def nsimpson(self, a, b, level):
+            n = ((b-a) * 30) + 150
             h = (b - a) / n
-            s = self.deriv(a) + self.deriv(b)
-
-            for i in range(1, n, 2):
-                s += 4 * self.deriv(a + i * h)
-            for i in range(2, n - 1, 2):
-                s += 2 * self.deriv(a + i * h)
-            return s * h / 3
-        if (a > b):
-            temp = b
-            b = a
-            a = temp
-            n = i * 3
-            h = (b - a) / n
-            s = self.deriv(a) + self.deriv(b)
-
-            for i in range(1, n, 2):
-                s += 4 * self.deriv(a + i * h)
-            for i in range(2, n - 1, 2):
-                s += 2 * self.deriv(a + i * h)
-            return  -1 * (s * h / 3)
+            if(level == 0):
+                s = self.evaluate(a) + self.evaluate(b)
+                for i in range(1, n, 2):
+                    s += 4 * self.evaluate(a + i * h)
+                for i in range(2, n - 1, 2):
+                    s += 2 * self.evaluate(a + i * h)
+                return s * h / 3
+            if (level == 1):
+                s = self.deriv(a) + self.deriv(b)
+                for i in range(1, n, 2):
+                    s += 4 * self.deriv(a + i * h)
+                for i in range(2, n - 1, 2):
+                    s += 2 * self.deriv(a + i * h)
+                return s * h / 3
+            if (level == 2):
+                s = self.secondDeriv(a) + self.secondDeriv(b)
+                for i in range(1, n, 2):
+                    s += 4 * self.secondDeriv(a + i * h)
+                for i in range(2, n - 1, 2):
+                    s += 2 * self.secondDeriv(a + i * h)
+                return s * h / 3
 
 
 
