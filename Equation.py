@@ -202,6 +202,17 @@ class Equation:
 
     #Uses Simpson's 3/8th rule for precise integral estimation
     def Integrate(self, a, b, level):
+
+
+
+        i = a
+        while i <= b:
+
+            i += self.resolution
+
+
+
+
         # integral = ((b-a)/8) [f(a) + 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
         if level == 0:
             return ((b-a)/8)*(self.evaluate(a) + 3*self.evaluate(((2*a)+b)/3)
@@ -212,6 +223,65 @@ class Equation:
         if level == 2:
             return ((b-a)/8)*(self.secondDeriv(a) + 3*self.secondDeriv(((2*a)+b)/3)
                               + 3*self.secondDeriv((a + (2*b))/3) + self.secondDeriv(b))
+
+
+    def AccurateIntegration(self, a, b, level):
+
+        IntegrationDomain = []
+
+
+
+        accumulator = 0
+
+        if( a < b):
+
+            i = a
+
+            while i <= b:
+                i = round(i, 3)
+                IntegrationDomain.append(i)
+                i += 0.01
+
+            print("Case 1")
+            index = 0
+
+            for d in IntegrationDomain:
+                if (index < len(IntegrationDomain) - 1):
+
+                    accumulator += self.Integrate(d, round(d+0.01,3), level)
+                    index+=1
+
+
+            return accumulator
+
+        if (a > b):
+
+            temp = b
+            b = a
+            a = temp
+
+            i = a
+
+            while i <= b:
+                i = round(i, 3)
+                IntegrationDomain.append(i)
+                i += 0.01
+
+            print("Case 2")
+            index = 0
+
+            for d in IntegrationDomain:
+                if (index < len(IntegrationDomain) - 1):
+                    accumulator += self.Integrate(d, round(d + 0.01, 3), level)
+                    index += 1
+
+            return -1 * accumulator
+
+
+        if (a == b):
+            print("Case 3")
+            return 0
+
 
 
     def FindHoles(self):
