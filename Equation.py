@@ -227,6 +227,8 @@ class Equation:
 
     def AccurateIntegration(self, a, b, level):
 
+        IntervalResolution = round(abs(a-b)/1000,3)
+        print(IntervalResolution)
         IntegrationDomain = []
 
         accumulator = 0
@@ -238,14 +240,14 @@ class Equation:
             while i <= b:
                 i = round(i, 3)
                 IntegrationDomain.append(i)
-                i += 0.01
+                i += IntervalResolution
 
             index = 0
 
             for d in IntegrationDomain:
                 if (index < len(IntegrationDomain) - 1):
 
-                    accumulator += self.Integrate(d, round(d+0.01,3), level)
+                    accumulator += self.Integrate(d, round(d+IntervalResolution,3), level)
                     index+=1
 
 
@@ -262,13 +264,13 @@ class Equation:
             while i <= b:
                 i = round(i, 3)
                 IntegrationDomain.append(i)
-                i += 0.01
+                i += IntervalResolution
 
             index = 0
 
             for d in IntegrationDomain:
                 if (index < len(IntegrationDomain) - 1):
-                    accumulator += self.Integrate(d, round(d + 0.01, 3), level)
+                    accumulator += self.Integrate(d, round(d + IntervalResolution, 3), level)
                     index += 1
 
             return -1 * accumulator
