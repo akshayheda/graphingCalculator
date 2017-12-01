@@ -9,6 +9,8 @@ import matplotlib.animation as animation
 import numpy as np
 import tkinter as tk
 from tkinter import *
+import plotly.plotly as py
+import plotly.graph_objs as go
 from Equation import Equation
 
 LARGE_FONT = ("Verdana", 12)
