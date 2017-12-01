@@ -213,7 +213,7 @@ class Equation:
                 b = a
                 a = temp
                 return -1 * nsimpson(a, b, level)
-            
+
     def nsimpson(self, a, b, level):
             n = ((b-a) * 30) + 150
             h = (b - a) / n
