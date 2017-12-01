@@ -243,7 +243,13 @@ def animate(i):
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
         integral = Y.integrate(A, B, 1)
-        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , str(round(integral,5)))
+
+        if(isnan(integral)):
+            integral = "<Could Not Evaluate: Check Bounds>"
+        else:
+            integral = round(integral,5)
+
+        print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , str(integral))
         print("Showing FTC...")
         print("f(", str(B) + " ) -  f(", str(A) + " ) = ", str(round(Y.evaluate(B) - Y.evaluate(A),5 )))
         print("|-^-^-^-^-^-^-^-^-^-^-^-|", eq,"|-^-^-^-^-^-^-^-^-^-^-^-|" + "\n")
@@ -270,6 +276,7 @@ def animate(i):
     plt.xticks(np.arange(xmin, xmax + 1, xScale))
     plt.yticks(np.arange(ymin, ymax + 1, yScale))
 
+    plt.savefig("graph.svg", dpi = 1000)
 
 class GraphingCalculator(tk.Tk):
     def __init__(self, *args, **kwargs):

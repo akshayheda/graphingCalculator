@@ -156,6 +156,9 @@ class Equation:
         except ZeroDivisionError:
             y=np.nan
         #error handling for complex numbers
+        except OverflowError:
+            y=np.nan
+
         if (np.iscomplex(y)):
             y = (np.nan)
         #error handling for float error - if a value is below the bound, it is set to zero
@@ -215,8 +218,10 @@ class Equation:
             return -1 * self.nsimpson(a, b, level)
 
     def nsimpson(self, a, b, level):
-            n = 3 * 1000
+            n = ceil((b-a) * 30 + 300)
             h = (b - a) / n
+            print(n)
+
             if(level == 0):
                 s = self.evaluate(a) + self.evaluate(b)
                 for i in range(1, n, 2):
