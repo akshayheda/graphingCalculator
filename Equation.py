@@ -215,7 +215,7 @@ class Equation:
             return -1 * self.nsimpson(a, b, level)
 
     def nsimpson(self, a, b, level):
-            n = ((b-a) * 30) + 150
+            n = 3 * 1000
             h = (b - a) / n
             if(level == 0):
                 s = self.evaluate(a) + self.evaluate(b)
