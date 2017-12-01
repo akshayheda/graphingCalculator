@@ -279,6 +279,33 @@ class Equation:
         if (a == b):
             return 0
 
+    def nsimpson(self, a, b, i):
+        if(a==b):
+            return 0;
+        if(b > a):
+            n = i*3
+            h = (b - a) / n
+            s = self.deriv(a) + self.deriv(b)
+
+            for i in range(1, n, 2):
+                s += 4 * self.deriv(a + i * h)
+            for i in range(2, n - 1, 2):
+                s += 2 * self.deriv(a + i * h)
+            return s * h / 3
+        if (a > b):
+            temp = b
+            b = a
+            a = temp
+            n = i * 3
+            h = (b - a) / n
+            s = self.deriv(a) + self.deriv(b)
+
+            for i in range(1, n, 2):
+                s += 4 * self.deriv(a + i * h)
+            for i in range(2, n - 1, 2):
+                s += 2 * self.deriv(a + i * h)
+            return  -1 * (s * h / 3)
+
 
 
     def FindHoles(self):
