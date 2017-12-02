@@ -9,8 +9,7 @@ import matplotlib.animation as animation
 import numpy as np
 import tkinter as tk
 from tkinter import *
-import plotly.plotly as py
-import plotly.graph_objs as go
+
 from Equation import Equation
 
 
@@ -40,6 +39,7 @@ Aprev = 0.0
 Bprev = 0.0
 
 FTC = 0.0
+FTCL = ""
 integral = 0.0
 app = 0
 def parse():
@@ -223,31 +223,29 @@ def animate(i):
 
     if((eqChange and compiledSuccess) or ((boundEvalChange) and compiledSuccess)):
 
-        print("New Function: f(x) = ", eq)
-        print("Function or Bounds Changed: Updating Graph...")
-
+        ax.cla()
 
         boundEvalChange = False
         compiledSuccess = False
         eqChange = False
-        ax.cla()
+
+        print("New Function: f(x) = ", eq)
+        print("Function or Bounds Changed: Updating Graph...")
+
         global Y
         Y = Equation(eq, xmin, xmax, ymin, ymax)
 
-        global integral
-
-
 
         ax.plot(Y.getDomain(), Y.getYFunction(), "red")
-
         ax.plot(Y.getDomain(), Y.getYDeriv(), "blue")
-
         ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
 
         plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=50, facecolors='none', edgecolors='purple')
         plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
         plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
+        global integral
+        integral = 0
         integral = Y.integrate(A, B, 1)
 
         if(isnan(integral)):
@@ -256,7 +254,12 @@ def animate(i):
             integral = round(integral,5)
 
         global FTC
+        FTC = 0
         FTC = round(Y.evaluate(B) - Y.evaluate(A), 5)
+
+        global FTCL
+        FTCL = ""
+        FTCL = "f(" + str(B) + ") -  f(" + str(A) + ") = "
 
         print("Integral from A (", str(A) + " ) to B (", str(B) + " ) of f'(x) is " , str(integral))
         print("Showing FTC...")
@@ -401,17 +404,16 @@ class GraphPage(tk.Frame):
         IntegralLabel = Label(self, text=integral)
         IntegralLabel.grid(row=8, column=1)
 
-        global Y
-
-        FTCL = "f(" + str(B) + ") -  f(" + str(A) + ") = "
+        global FTCL
 
         FTCLabelText = Label(self, text=FTCL)
         FTCLabelText.grid(row=9, column=0)
 
-        FTC = round(Y.evaluate(B) - Y.evaluate(A),5 )
+        global FTC
 
-        FTCLabel = Label(self, text= str(FTC))
+        FTCLabel = Label(self, text=str(FTC))
         FTCLabel.grid(row=9, column=1)
+
 
     def __init__(self, parent, controller):
         global eq
@@ -483,25 +485,6 @@ class GraphPage(tk.Frame):
         canvas._tkcanvas.grid(row=2)
         graphingFrame.grid(row =11, column = 2)
 
-        IntegralLabelText = Label(self, text="Integral from A to B =")
-        IntegralLabelText.grid(row=8, column=0)
-
-        global integral
-
-        IntegralLabel = Label(self, text=integral)
-        IntegralLabel.grid(row=8, column=1)
-
-        global Y
-
-        FTCL = "f(" + str(B) + ") -  f(" + str(A) + ") = "
-
-        FTCLabelText = Label(self, text=FTCL)
-        FTCLabelText.grid(row=9, column=0)
-
-        global FTC
-
-        FTCLabel = Label(self, text=str(FTC))
-        FTCLabel.grid(row=9, column=1)
 
 
 
