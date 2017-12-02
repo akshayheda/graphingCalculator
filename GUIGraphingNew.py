@@ -42,6 +42,7 @@ FTC = 0.0
 FTCL = ""
 integral = 0.0
 app = 0
+
 def parse():
     global eq
 
@@ -396,7 +397,7 @@ class GraphPage(tk.Frame):
         else:
             B = 0
 
-        IntegralLabelText = Label(self, text="Integral from A to B =")
+        IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =")
         IntegralLabelText.grid(row=8, column=0)
 
         global integral
