@@ -12,7 +12,7 @@ from tkinter import *
 
 from Equation import Equation
 
-
+plt.style.use('seaborn-whitegrid')
 LARGE_FONT = ("Verdana", 12)
 
 fig, ax = plt.subplots()
