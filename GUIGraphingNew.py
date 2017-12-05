@@ -284,54 +284,61 @@ class GraphPage(tk.Frame):
         func = e1.get()
 
         eq = func
-        if(len(xminEntry.get()) > 0):
-            Xmin = float(xminEntry.get())
-        else:
-            Xmin = -10.0
 
-        if (len(xmaxEntry.get()) > 0):
-            Xmax = float(xmaxEntry.get())
-        else:
-            Xmax = 10.0
+        try:
+            if(len(xminEntry.get()) > 0):
+                Xmin = float(xminEntry.get())
+            else:
+                Xmin = -10.0
 
-        if (len(yminEntry.get()) > 0):
-            Ymin = float(yminEntry.get())
-        else:
-            Ymin = -10.0
+            if (len(xmaxEntry.get()) > 0):
+                Xmax = float(xmaxEntry.get())
+            else:
+                Xmax = 10.0
 
-        if (len(ymaxEntry.get()) > 0):
-            Ymax = float(ymaxEntry.get())
-        else:
-            Ymax = 10.0
+            if (len(yminEntry.get()) > 0):
+                Ymin = float(yminEntry.get())
+            else:
+                Ymin = -10.0
 
-        if (len(AEntry.get()) > 0):
-            A = float(AEntry.get())
-        else:
-            A = 0
+            if (len(ymaxEntry.get()) > 0):
+                Ymax = float(ymaxEntry.get())
+            else:
+                Ymax = 10.0
 
-        if (len(BEntry.get()) > 0):
-            B = float(BEntry.get())
-        else:
-            B = 0
+            if (len(AEntry.get()) > 0):
+                A = float(AEntry.get())
+            else:
+                A = 0
+
+            if (len(BEntry.get()) > 0):
+                B = float(BEntry.get())
+            else:
+                B = 0
+
+            IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font=(fontName, fontSize))
+            IntegralLabelText.grid(row=8, column=0)
+
+            global integral
+
+            IntegralLabel = Label(self, text=integral, font=(fontName, fontSize))
+            IntegralLabel.grid(row=8, column=1)
+
+            global FTCL
+
+            FTCLabelText = Label(self, text=FTCL, font=(fontName, fontSize))
+            FTCLabelText.grid(row=9, column=0)
+
+            global FTC
+
+            FTCLabel = Label(self, text=str(FTC), font=(fontName, fontSize))
+            FTCLabel.grid(row=9, column=1)
+
+        except ValueError:
+            print("Check Fields")
 
 
-        IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font = (fontName,fontSize))
-        IntegralLabelText.grid(row=8, column=0)
 
-        global integral
-
-        IntegralLabel = Label(self, text=integral, font = (fontName,fontSize))
-        IntegralLabel.grid(row=8, column=1)
-
-        global FTCL
-
-        FTCLabelText = Label(self, text=FTCL, font = (fontName,fontSize))
-        FTCLabelText.grid(row=9, column=0)
-
-        global FTC
-
-        FTCLabel = Label(self, text=str(FTC), font = (fontName,fontSize))
-        FTCLabel.grid(row=9, column=1)
 
 
     def __init__(self, parent, controller):
@@ -393,7 +400,6 @@ class GraphPage(tk.Frame):
 
         BLabel = Label(self, text="Upper Limit (B):", font = (fontName,fontSize))
         BLabel.grid(row=7, column=0)
-
 
         graphingFrame = Frame(self)
         canvas = FigureCanvasTkAgg(fig, graphingFrame)
