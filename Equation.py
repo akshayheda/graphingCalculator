@@ -61,6 +61,108 @@ class Equation:
         # Locate removable discontinuities
         self.Holes = self.FindHoles()
 
+    @staticmethod
+    def parse(eq):
+
+
+        eq = eq.lower()
+        eq = eq.replace("^", "**")
+        eq = eq.replace("sec(", "(1)/cos(")
+        eq = eq.replace("csc(", "(1)/sin(")
+        eq = eq.replace("cot(", "(1)/tan(")
+
+        eq = eq.replace("1x", "1*x")
+        eq = eq.replace("2x", "2*x")
+        eq = eq.replace("3x", "3*x")
+        eq = eq.replace("4x", "4*x")
+        eq = eq.replace("5x", "5*x")
+        eq = eq.replace("6x", "6*x")
+        eq = eq.replace("7x", "7*x")
+        eq = eq.replace("8x", "8*x")
+        eq = eq.replace("9x", "9*x")
+        eq = eq.replace("0x", "0*x")
+
+        eq = eq.replace("1(", "1*(")
+        eq = eq.replace("2(", "2*(")
+        eq = eq.replace("3(", "3*(")
+        eq = eq.replace("4(", "4*(")
+        eq = eq.replace("5(", "5*(")
+        eq = eq.replace("6(", "6*(")
+        eq = eq.replace("7(", "7*(")
+        eq = eq.replace("8(", "8*(")
+        eq = eq.replace("9(", "9*(")
+        eq = eq.replace("0(", "0*(")
+
+        eq = eq.replace("1s", "1*s")
+        eq = eq.replace("2s", "2*s")
+        eq = eq.replace("3s", "3*s")
+        eq = eq.replace("4s", "4*s")
+        eq = eq.replace("5s", "5*s")
+        eq = eq.replace("6s", "6*s")
+        eq = eq.replace("7s", "7*s")
+        eq = eq.replace("8s", "8*s")
+        eq = eq.replace("9s", "9*s")
+        eq = eq.replace("0s", "0*s")
+
+        eq = eq.replace("1c", "1*c")
+        eq = eq.replace("2c", "2*c")
+        eq = eq.replace("3c", "3*c")
+        eq = eq.replace("4c", "4*c")
+        eq = eq.replace("5c", "5*c")
+        eq = eq.replace("6c", "6*c")
+        eq = eq.replace("7c", "7*c")
+        eq = eq.replace("8c", "8*c")
+        eq = eq.replace("9c", "9*c")
+        eq = eq.replace("0c", "0*c")
+
+        eq = eq.replace("1t", "1*t")
+        eq = eq.replace("2t", "2*t")
+        eq = eq.replace("3t", "3*t")
+        eq = eq.replace("4t", "4*t")
+        eq = eq.replace("5t", "5*t")
+        eq = eq.replace("6t", "6*t")
+        eq = eq.replace("7t", "7*t")
+        eq = eq.replace("8t", "8*t")
+        eq = eq.replace("9t", "9*t")
+        eq = eq.replace("0t", "0*t")
+
+        eq = eq.replace("1l", "1*l")
+        eq = eq.replace("2l", "2*l")
+        eq = eq.replace("3l", "3*l")
+        eq = eq.replace("4l", "4*l")
+        eq = eq.replace("5l", "5*l")
+        eq = eq.replace("6l", "6*l")
+        eq = eq.replace("7l", "7*l")
+        eq = eq.replace("8l", "8*l")
+        eq = eq.replace("9l", "9*l")
+        eq = eq.replace("0l", "0*l")
+
+        eq = eq.replace("1a", "1*a")
+        eq = eq.replace("2a", "2*a")
+        eq = eq.replace("3a", "3*a")
+        eq = eq.replace("4a", "4*a")
+        eq = eq.replace("5a", "5*a")
+        eq = eq.replace("6a", "6*a")
+        eq = eq.replace("7a", "7*a")
+        eq = eq.replace("8a", "8*a")
+        eq = eq.replace("9a", "9*a")
+        eq = eq.replace("0a", "0*a")
+
+        eq = eq.replace("1g", "1*g")
+        eq = eq.replace("2g", "2*g")
+        eq = eq.replace("3g", "3*g")
+        eq = eq.replace("4g", "4*g")
+        eq = eq.replace("5g", "5*g")
+        eq = eq.replace("6g", "6*g")
+        eq = eq.replace("7g", "7*g")
+        eq = eq.replace("8g", "8*g")
+        eq = eq.replace("9g", "9*g")
+        eq = eq.replace("0g", "0*g")
+
+        eq = eq.replace(")(", ")*(")
+
+        return eq
+
     # publically accessable getter functions, to access generated values of this object
     def getExpression(self):
         return self.Expression
