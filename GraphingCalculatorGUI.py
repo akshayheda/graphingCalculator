@@ -10,8 +10,7 @@ import numpy as np
 import tkinter as tk
 from tkinter import *
 
-from Equation import Equation
-
+from graphingCalculator.Equation import Equation
 plt.style.use('seaborn-whitegrid')
 LARGE_FONT = ("Verdana", 12)
 csfont = {'fontname':'Comic Sans MS'}
@@ -361,65 +360,65 @@ class GraphPage(tk.Frame):
         global e1
         e1 = Entry(self)
         e1.configure(background = "#E0E0E0")
-        e1.grid(row=1, column=1)
+        e1.grid(row=2, column=1)
 
         EquationLabel = Label(self, text="f(x) =", font = (fontName,fontSize))
         EquationLabel.configure(background = "white")
-        EquationLabel.grid(row=1, column=0)
+        EquationLabel.grid(row=2, column=0)
 
         global xminEntry
         xminEntry = Entry(self)
         xminEntry.configure(background = "#E0E0E0")
-        xminEntry.grid(row=2, column=1)
+        xminEntry.grid(row=3, column=1)
 
         xminLabel = Label(self, text="Xmin:", font = (fontName,fontSize))
         xminLabel.configure(background = "white")
-        xminLabel.grid(row=2, column=0)
+        xminLabel.grid(row=3, column=0)
 
         global xmaxEntry
         xmaxEntry = Entry(self)
         xmaxEntry.configure(background = "#E0E0E0")
-        xmaxEntry.grid(row=3, column=1)
+        xmaxEntry.grid(row=4, column=1)
 
         xmaxLabel = Label(self, text="Xmax:", font = (fontName,fontSize))
         xmaxLabel.configure(background = "white")
-        xmaxLabel.grid(row=3, column=0)
+        xmaxLabel.grid(row=4, column=0)
 
         global yminEntry
         yminEntry = Entry(self)
         yminEntry.configure(background = "#E0E0E0")
-        yminEntry.grid(row=4, column=1)
+        yminEntry.grid(row=5, column=1)
 
         yminLabel = Label(self, text="Ymin:", font = (fontName,fontSize))
         yminLabel.configure(background = "white")
-        yminLabel.grid(row=4, column=0)
+        yminLabel.grid(row=5, column=0)
 
         global ymaxEntry
         ymaxEntry = Entry(self)
         ymaxEntry.configure(background = "#E0E0E0")
-        ymaxEntry.grid(row=5, column=1)
+        ymaxEntry.grid(row=6, column=1)
 
         ymaxLabel = Label(self, text="Ymax:", font = (fontName,fontSize))
         ymaxLabel.configure(background = "white")
-        ymaxLabel.grid(row=5, column=0)
+        ymaxLabel.grid(row=6, column=0)
 
         global AEntry
         AEntry = Entry(self)
         AEntry.configure(background = "#E0E0E0")
-        AEntry.grid(row=6, column=1)
+        AEntry.grid(row=7, column=1)
 
         ALabel = Label(self, text="Lower Limit (A):", font = (fontName,fontSize))
         ALabel.configure(background = "white")
-        ALabel.grid(row=6, column=0)
+        ALabel.grid(row=7, column=0)
 
         global BEntry
         BEntry = Entry(self)
         BEntry.configure(background = "#E0E0E0")
-        BEntry.grid(row=7, column=1)
+        BEntry.grid(row=8, column=1)
 
         BLabel = Label(self, text="Upper Limit (B):", font = (fontName,fontSize))
         BLabel.configure(background = "white")
-        BLabel.grid(row=7, column=0)
+        BLabel.grid(row=8, column=0)
 
         graphingFrame = Frame(self)
         canvas = FigureCanvasTkAgg(fig, graphingFrame)
@@ -428,7 +427,7 @@ class GraphPage(tk.Frame):
         canvas.get_tk_widget().grid(row=1)
 
         canvas._tkcanvas.grid(row=2)
-        graphingFrame.grid(row =11, column = 2)
+        graphingFrame.grid(row =1, columnspan=2, sticky=W)
 
 
 
