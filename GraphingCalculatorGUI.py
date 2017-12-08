@@ -16,8 +16,8 @@ plt.style.use('seaborn-whitegrid')
 LARGE_FONT = ("Verdana", 12)
 csfont = {'fontname':'Comic Sans MS'}
 
-fontSize = 8
-fontName = "Comic Sans MS"
+fontSize = 10
+fontName = "Segoe UI"
 
 fig, ax = plt.subplots()
 
@@ -48,8 +48,6 @@ integral = 0.0
 app = 0
 
 
-
-
 def animate(i):
     global app
     app.getFrame().updateFunction()
@@ -72,10 +70,6 @@ def animate(i):
         compiledSuccess = False
     except NameError:
         compiledSuccess = False
-
-
-
-
 
     global Xmin
     global Xmax
@@ -152,13 +146,17 @@ def animate(i):
             initializationSuccess = False
 
         if(initializationSuccess == True):
-            ax.plot(Y.getDomain(), Y.getYFunction(), "red")
-            ax.plot(Y.getDomain(), Y.getYDeriv(), "blue")
-            ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green")
+            fofx, = ax.plot(Y.getDomain(), Y.getYFunction(), "red", label = "Function")
+            fprimeofx, = ax.plot(Y.getDomain(), Y.getYDeriv(), "blue", label = "First Derivative")
+            fdoubleprimeofx, = ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green", label = "Second Derivative")
 
-            plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=50, facecolors='none', edgecolors='purple')
-            plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
-            plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
+            fhole = plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=50, facecolors='none', edgecolors='purple')
+            fextrema = plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
+            finflection = plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
+
+            #plt.legend()
+            plt.legend([fofx, fprimeofx, fdoubleprimeofx, fhole, fextrema, finflection] , ["Function","First Derivative", "Second Derivative", "Holes", "Extrema", "Inflection"], bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
+
 
             global integral
             integral = 0
@@ -204,7 +202,7 @@ def animate(i):
             plt.xticks(np.arange(xmin, xmax + 1, xScale))
             plt.yticks(np.arange(ymin, ymax + 1, yScale))
 
-            plt.savefig("graph.svg", dpi = 1000)
+            #plt.savefig(eq + ".svg", dpi = 1000)
 
         app.getFrame().updateFunction()
 
@@ -232,7 +230,10 @@ class GraphingCalculator(tk.Tk):
 
         self.frame.grid(row=0, column=0, sticky="nsew")
 
+        self.frame.configure(background = "white")
+
         self.show_frame(GraphPage)
+
 
     def show_frame(self, cont):
         frame = self.frames[cont]
@@ -322,16 +323,19 @@ class GraphPage(tk.Frame):
             global integral
 
             IntegralLabel = Label(self, text=integral, font=(fontName, fontSize))
+            IntegralLabel.configure(background = "white")
             IntegralLabel.grid(row=8, column=1)
 
             global FTCL
 
             FTCLabelText = Label(self, text=FTCL, font=(fontName, fontSize))
+            FTCLabelText.configure(background = "white")
             FTCLabelText.grid(row=9, column=0)
 
             global FTC
 
             FTCLabel = Label(self, text=str(FTC), font=(fontName, fontSize))
+            FTCLabel.configure(background = "white")
             FTCLabel.grid(row=9, column=1)
 
         except ValueError:
@@ -351,54 +355,70 @@ class GraphPage(tk.Frame):
         self.mainTitleText = StringVar()
         self.mainTitleText.set('Graphing Calculator')
         self.mainTitle = Label(self, text=self.mainTitleText.get(), font = (fontName,16))
+        self.mainTitle.configure(background = "white")
         self.mainTitle.grid(row=0)
 
         global e1
         e1 = Entry(self)
+        e1.configure(background = "#E0E0E0")
         e1.grid(row=1, column=1)
+
         EquationLabel = Label(self, text="f(x) =", font = (fontName,fontSize))
+        EquationLabel.configure(background = "white")
         EquationLabel.grid(row=1, column=0)
 
         global xminEntry
         xminEntry = Entry(self)
+        xminEntry.configure(background = "#E0E0E0")
         xminEntry.grid(row=2, column=1)
 
         xminLabel = Label(self, text="Xmin:", font = (fontName,fontSize))
+        xminLabel.configure(background = "white")
         xminLabel.grid(row=2, column=0)
 
         global xmaxEntry
         xmaxEntry = Entry(self)
+        xmaxEntry.configure(background = "#E0E0E0")
         xmaxEntry.grid(row=3, column=1)
 
         xmaxLabel = Label(self, text="Xmax:", font = (fontName,fontSize))
+        xmaxLabel.configure(background = "white")
         xmaxLabel.grid(row=3, column=0)
 
         global yminEntry
         yminEntry = Entry(self)
+        yminEntry.configure(background = "#E0E0E0")
         yminEntry.grid(row=4, column=1)
 
         yminLabel = Label(self, text="Ymin:", font = (fontName,fontSize))
+        yminLabel.configure(background = "white")
         yminLabel.grid(row=4, column=0)
 
         global ymaxEntry
         ymaxEntry = Entry(self)
+        ymaxEntry.configure(background = "#E0E0E0")
         ymaxEntry.grid(row=5, column=1)
 
         ymaxLabel = Label(self, text="Ymax:", font = (fontName,fontSize))
+        ymaxLabel.configure(background = "white")
         ymaxLabel.grid(row=5, column=0)
 
         global AEntry
         AEntry = Entry(self)
+        AEntry.configure(background = "#E0E0E0")
         AEntry.grid(row=6, column=1)
 
         ALabel = Label(self, text="Lower Limit (A):", font = (fontName,fontSize))
+        ALabel.configure(background = "white")
         ALabel.grid(row=6, column=0)
 
         global BEntry
         BEntry = Entry(self)
+        BEntry.configure(background = "#E0E0E0")
         BEntry.grid(row=7, column=1)
 
         BLabel = Label(self, text="Upper Limit (B):", font = (fontName,fontSize))
+        BLabel.configure(background = "white")
         BLabel.grid(row=7, column=0)
 
         graphingFrame = Frame(self)
@@ -416,4 +436,5 @@ class GraphPage(tk.Frame):
 
 app = GraphingCalculator()
 ani = animation.FuncAnimation(fig, animate, interval=250)
+
 app.mainloop()

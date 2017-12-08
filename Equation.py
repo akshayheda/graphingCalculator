@@ -71,6 +71,10 @@ class Equation:
         eq = eq.replace("csc(", "(1)/sin(")
         eq = eq.replace("cot(", "(1)/tan(")
 
+        eq = eq.replace("xx", "x*x")
+        eq = eq.replace("xxx", "x*x*x")
+        eq = eq.replace("xxxx", "x*x*x*x")
+
         eq = eq.replace("1x", "1*x")
         eq = eq.replace("2x", "2*x")
         eq = eq.replace("3x", "3*x")
@@ -160,6 +164,8 @@ class Equation:
         eq = eq.replace("0g", "0*g")
 
         eq = eq.replace(")(", ")*(")
+
+
 
         return eq
 
