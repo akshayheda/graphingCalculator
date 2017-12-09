@@ -26,6 +26,27 @@ TickFont = {'fontname':fontName}
 TickFontSize = 10
 
 fig, ax = plt.subplots()
+ax.set_ylim([-10, 10])
+
+ax.grid(False, which='both')
+
+            # set the x-spine (see below for more info on `set_position`)
+ax.spines['left'].set_position('zero')
+
+            # turn off the right spine/ticks
+ax.spines['right'].set_color('none')
+ax.yaxis.tick_left()
+
+            # set the y-spine
+ax.spines['bottom'].set_position('zero')
+
+            # turn off the top spine/ticks
+ax.spines['top'].set_color('none')
+ax.xaxis.tick_bottom()
+plt.xticks(fontsize=TickFontSize, **TickFont)
+plt.yticks(fontsize=TickFontSize, **TickFont)
+plt.xticks(np.arange(-10, 10 + 1, 1))
+plt.yticks(np.arange(-10, 10 + 1, 1))
 
 Y = "ReplacedWithFunction"
 
