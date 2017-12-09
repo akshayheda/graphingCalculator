@@ -10,13 +10,20 @@ import numpy as np
 import tkinter as tk
 from tkinter import *
 
-from graphingCalculator.Equation import Equation
-plt.style.use('seaborn-whitegrid')
-LARGE_FONT = ("Verdana", 12)
-csfont = {'fontname':'Comic Sans MS'}
+OSX = False
+
+if(OSX):
+    from graphingCalculator.Equation import Equation
+else:
+    from Equation import Equation
+
+
 
 fontSize = 10
 fontName = "Segoe UI"
+
+TickFont = {'fontname':fontName}
+TickFontSize = 10
 
 fig, ax = plt.subplots()
 
@@ -196,8 +203,8 @@ def animate(i):
             # turn off the top spine/ticks
             ax.spines['top'].set_color('none')
             ax.xaxis.tick_bottom()
-            plt.xticks(fontsize=10, **csfont)
-            plt.yticks(fontsize=10, **csfont)
+            plt.xticks(fontsize=TickFontSize, **TickFont)
+            plt.yticks(fontsize=TickFontSize, **TickFont)
             plt.xticks(np.arange(xmin, xmax + 1, xScale))
             plt.yticks(np.arange(ymin, ymax + 1, yScale))
 
