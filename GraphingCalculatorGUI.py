@@ -1,6 +1,4 @@
-from __future__ import division
 from math import *
-import math
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib import pyplot as plt
@@ -10,7 +8,7 @@ import numpy as np
 import tkinter as tk
 from tkinter import *
 
-OSX = False
+OSX = True
 
 if(OSX):
     from graphingCalculator.Equation import Equation
@@ -21,26 +19,21 @@ else:
 
 fontSize = 10
 fontName = "Segoe UI"
+if(OSX):
+    fontName = "Helvetica"
 
 TickFont = {'fontname':fontName}
 TickFontSize = 10
 
 fig, ax = plt.subplots()
+
+
 ax.set_ylim([-10, 10])
-
 ax.grid(False, which='both')
-
-            # set the x-spine (see below for more info on `set_position`)
 ax.spines['left'].set_position('zero')
-
-            # turn off the right spine/ticks
 ax.spines['right'].set_color('none')
 ax.yaxis.tick_left()
-
-            # set the y-spine
 ax.spines['bottom'].set_position('zero')
-
-            # turn off the top spine/ticks
 ax.spines['top'].set_color('none')
 ax.xaxis.tick_bottom()
 plt.xticks(fontsize=TickFontSize, **TickFont)
@@ -173,6 +166,7 @@ def animate(i):
             initializationSuccess = False
 
         if(initializationSuccess == True):
+
             fofx, = ax.plot(Y.getDomain(), Y.getYFunction(), "red", label = "Function")
             fprimeofx, = ax.plot(Y.getDomain(), Y.getYDeriv(), "blue", label = "First Derivative")
             fdoubleprimeofx, = ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green", label = "Second Derivative")
@@ -181,7 +175,6 @@ def animate(i):
             fextrema = plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
             finflection = plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
-            #plt.legend()
             plt.legend([fofx, fprimeofx, fdoubleprimeofx, fhole, fextrema, finflection] , ["Function","First Derivative", "Second Derivative", "Holes", "Extrema", "Inflection"], bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
 
 
@@ -451,6 +444,10 @@ class GraphPage(tk.Frame):
 
         graphingFrame = Frame(self)
         canvas = FigureCanvasTkAgg(fig, graphingFrame)
+
+        nameLabel = Label(self, text="Created by Saketh Kollu and Akshay Heda (P.3)", font = (fontName,fontSize))
+        nameLabel.configure(background="white")
+        nameLabel.grid(row=11, columnspan = 2)
 
         canvas.show()
         canvas.get_tk_widget().grid(row=1)
