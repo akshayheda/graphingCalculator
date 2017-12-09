@@ -317,25 +317,25 @@ class GraphPage(tk.Frame):
                 B = 0
 
             IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font=(fontName, fontSize))
-            IntegralLabelText.grid(row=8, column=0)
+            IntegralLabelText.grid(row=9, column=0)
 
             global integral
 
             IntegralLabel = Label(self, text=integral, font=(fontName, fontSize))
             IntegralLabel.configure(background = "white")
-            IntegralLabel.grid(row=8, column=1)
+            IntegralLabel.grid(row=9, column=1)
 
             global FTCL
 
             FTCLabelText = Label(self, text=FTCL, font=(fontName, fontSize))
             FTCLabelText.configure(background = "white")
-            FTCLabelText.grid(row=9, column=0)
+            FTCLabelText.grid(row=10, column=0)
 
             global FTC
 
             FTCLabel = Label(self, text=str(FTC), font=(fontName, fontSize))
             FTCLabel.configure(background = "white")
-            FTCLabel.grid(row=9, column=1)
+            FTCLabel.grid(row=10, column=1)
 
         except ValueError:
             print("Check Fields")
@@ -355,7 +355,7 @@ class GraphPage(tk.Frame):
         self.mainTitleText.set('Graphing Calculator')
         self.mainTitle = Label(self, text=self.mainTitleText.get(), font = (fontName,16))
         self.mainTitle.configure(background = "white")
-        self.mainTitle.grid(row=0)
+        self.mainTitle.grid(row=0, columnspan = 2)
 
         global e1
         e1 = Entry(self)
