@@ -49,7 +49,7 @@ Aprev = 0.0
 Bprev = 0.0
 
 FTC = 0.0
-FTCL = ""
+FTCL = "f(" + "B" + ") -  f(" + "A" + ") = "
 integral = 0.0
 app = 0
 
@@ -324,6 +324,7 @@ class GraphPage(tk.Frame):
                 B = 0
 
             IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font=(fontName, fontSize))
+            IntegralLabelText.configure(background="white")
             IntegralLabelText.grid(row=9, column=0)
 
             global integral
