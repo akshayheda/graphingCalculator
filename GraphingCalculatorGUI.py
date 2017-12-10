@@ -5,22 +5,20 @@ from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 import numpy as np
+import platform
 import tkinter as tk
 from tkinter import *
 
-OSX = True
+OperatingSystem = platform.system()
 
-if(OSX):
-    from graphingCalculator.Equation import Equation
-else:
+if(OperatingSystem == "Windows"):
     from Equation import Equation
-
-
+else:
+    from graphingCalculator.Equation import Equation
 
 fontSize = 10
 fontName = "Segoe UI"
-if(OSX):
-    fontName = "Helvetica"
+
 
 TickFont = {'fontname':fontName}
 TickFontSize = 10
@@ -448,6 +446,10 @@ class GraphPage(tk.Frame):
         nameLabel = Label(self, text="Created by Saketh Kollu and Akshay Heda (P.3)", font = (fontName,fontSize))
         nameLabel.configure(background="white")
         nameLabel.grid(row=11, columnspan = 2)
+
+        githubLabel = Label(self, text="https://github.com/akshayheda/graphingCalculator", font=(fontName, fontSize -2))
+        githubLabel.configure(background="white")
+        githubLabel.grid(row=12, columnspan=2)
 
         canvas.show()
         canvas.get_tk_widget().grid(row=1)
