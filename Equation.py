@@ -64,9 +64,11 @@ class Equation:
     @staticmethod
     def parse(eq):
 
-
+        #makes the equation parsable by using regex to replace edge cases
         eq = eq.lower()
         eq = eq.replace("^", "**")
+
+        #handles cofunctions and converts to standard functions
         eq = eq.replace("sec(", "(1)/cos(")
         eq = eq.replace("csc(", "(1)/sin(")
         eq = eq.replace("cot(", "(1)/tan(")
@@ -75,6 +77,8 @@ class Equation:
         eq = eq.replace("xxx", "x*x*x")
         eq = eq.replace("xxxx", "x*x*x*x")
 
+        #uses regex to convert implicit multiplication to explicit multiplication
+        #matches each edge case (sin, cos, tan, etc)
         eq = eq.replace("1x", "1*x")
         eq = eq.replace("2x", "2*x")
         eq = eq.replace("3x", "3*x")
@@ -179,6 +183,7 @@ class Equation:
 
 
         return eq
+
 
     # publically accessable getter functions, to access generated values of this object
     def getExpression(self):
@@ -326,55 +331,74 @@ class Equation:
 
     # Uses Simpson's 3/8th rule for precise integral estimation
     # integral = ((b-a)/8) [f(a) + 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
-
     def integrate(self, a, b, level):
+        #case 1: if upper and lower bound are the same, return 0
         if (a == b):
             return 0
         if (b > a):
             return self.nsimpson(a, b, level)
+        #if bounds are flipped, return -1 * integral
         if (a > b):
             temp = b
             b = a
             a = temp
             return -1 * self.nsimpson(a, b, level)
-
+    #uses n interval simpson's rule to approximate integral
     def nsimpson(self, a, b, level):
+        #number of intervals is 30 for every range of 1, with an additional 300 for good measure
         n = ceil((b - a) * 30 + 300)
         h = (b - a) / n
         print(n)
 
+        #allows for level to passed in with appropriate return value
+        #function integral
         if (level == 0):
+            #adds the endpoints to the sum
             s = self.evaluate(a) + self.evaluate(b)
+            #loops through while stepping by 2 to add 4f(x)
             for i in range(1, n, 2):
                 s += 4 * self.evaluate(a + i * h)
+            #loops through the other half of intervals to add the 2f(x)
             for i in range(2, n - 1, 2):
                 s += 2 * self.evaluate(a + i * h)
+            #returns integral
             return s * h / 3
+
+        #derivative integral
         if (level == 1):
+            #adds the endpoints to the sum
             s = self.deriv(a) + self.deriv(b)
+            #loops through while stepping by 2 to add 4f'(x)
             for i in range(1, n, 2):
                 s += 4 * self.deriv(a + i * h)
+            #loops through the other half of intervals to add the 2f'(x)
             for i in range(2, n - 1, 2):
                 s += 2 * self.deriv(a + i * h)
+            #returns integral
             return s * h / 3
+
+        #second derivative integral
         if (level == 2):
+            #adds the endpoints to the sum
             s = self.secondDeriv(a) + self.secondDeriv(b)
+            #loops through while stepping by 2 to add 4f''(x)
             for i in range(1, n, 2):
                 s += 4 * self.secondDeriv(a + i * h)
+            #loops through the other half of intervals to add the 2f''(x)
             for i in range(2, n - 1, 2):
                 s += 2 * self.secondDeriv(a + i * h)
+            #returns integral
             return s * h / 3
+
 
     def FindHoles(self):
         HoleX = []
         HoleY = []
 
         # Iterate through each y value, excluding the first and last y value to prevent index errors
-
         for i in range(1, len(self.Domain) - 2):
 
-            # checks if y value is undefined
-
+            # checks if y value is not undefined
             if math.isnan(self.YFunction[i]):
 
                 yPrev = self.YFunction[i - 1]

@@ -13,11 +13,12 @@ OperatingSystem = platform.system()
 
 if(OperatingSystem == "Windows"):
     from Equation import Equation
+    fontName = "Segoe UI"
 else:
     from graphingCalculator.Equation import Equation
-
+    fontName = "Arial Narrow"
 fontSize = 10
-fontName = "Segoe UI"
+
 
 
 TickFont = {'fontname':fontName}
