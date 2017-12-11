@@ -163,6 +163,17 @@ class Equation:
         eq = eq.replace("9g", "9*g")
         eq = eq.replace("0g", "0*g")
 
+        eq = eq.replace("1e", "1*e")
+        eq = eq.replace("2e", "2*e")
+        eq = eq.replace("3e", "3*e")
+        eq = eq.replace("4e", "4*e")
+        eq = eq.replace("5e", "5*e")
+        eq = eq.replace("6e", "6*e")
+        eq = eq.replace("7e", "7*e")
+        eq = eq.replace("8e", "8*e")
+        eq = eq.replace("9e", "9*e")
+        eq = eq.replace("0e", "0*e")
+
         eq = eq.replace(")(", ")*(")
 
 

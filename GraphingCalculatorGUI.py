@@ -88,6 +88,8 @@ def animate(i):
         compiledSuccess = False
     except NameError:
         compiledSuccess = False
+    except TypeError:
+        compiledSuccess = False
 
     global Xmin
     global Xmax
