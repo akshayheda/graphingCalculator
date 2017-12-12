@@ -73,6 +73,10 @@ class Equation:
         eq = eq.replace("csc(", "(1)/sin(")
         eq = eq.replace("cot(", "(1)/tan(")
 
+        eq = eq.replace("arctan(", "atan(")
+        eq = eq.replace("arcsin(", "asin(")
+        eq = eq.replace("arccos(", "acos(")
+
         eq = eq.replace("xx", "x*x")
         eq = eq.replace("xxx", "x*x*x")
         eq = eq.replace("xxxx", "x*x*x*x")

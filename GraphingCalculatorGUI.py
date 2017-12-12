@@ -19,8 +19,6 @@ else:
     fontName = "Arial Narrow"
 fontSize = 10
 
-
-
 TickFont = {'fontname':fontName}
 TickFontSize = 10
 
