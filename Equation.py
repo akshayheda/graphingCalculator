@@ -37,7 +37,6 @@ class Equation:
         self.Expression = Expression
 
         # Convert the string input into python readable equation string
-        self.preParseString()
         # Convert python readable string into an python file that can have x values passed it it and return y values
         self.CompiledExpression = self.compileExpression()
 
@@ -61,8 +60,10 @@ class Equation:
         # Locate removable discontinuities
         self.Holes = self.FindHoles()
 
+
     @staticmethod
     def parse(eq):
+
 
         #makes the equation parsable by using regex to replace edge cases
         eq = eq.lower()
@@ -184,9 +185,27 @@ class Equation:
 
         eq = eq.replace(")(", ")*(")
 
+        def parseSQRT(equation):
+            start = 0
+            start = equation.find("sqrt(", start)
 
+            if start == -1:
+                return equation
+
+            end = equation.find(")", start + 1)
+
+            number = equation[start + 5: end]
+
+            number = float(number)
+
+            equation = equation.replace(str(equation[start:end +1]), str(round(sqrt(number), 3)))
+
+            return equation
+
+        eq = parseSQRT(eq)
 
         return eq
+
 
 
     # publically accessable getter functions, to access generated values of this object
@@ -227,13 +246,6 @@ class Equation:
     def compileExpression(self):
         return compile(self.Expression, "temp.py", "eval")
 
-    # uses Regular Expressions to convert expression syntax to python syntax
-    def preParseString(self):
-        self.Expression = self.Expression.lower()
-        self.Expression = self.Expression.replace("^", "**")
-        self.Expression = self.Expression.replace("sec(", "(1)/cos(")
-        self.Expression = self.Expression.replace("csc(", "(1)/sin(")
-        self.Expression = self.Expression.replace("cot(", "(1)/tan(")
 
     # steps through all values in the range using a resolution
 

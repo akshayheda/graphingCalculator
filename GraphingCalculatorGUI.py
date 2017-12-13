@@ -64,10 +64,14 @@ FTCL = "f(" + "B" + ") -  f(" + "A" + ") = "
 integral = 0.0
 app = 0
 
+showF = True
+showFPrime = True
+showFDoublePrime = True
+
 
 def animate(i):
     global app
-    app.getFrame().updateFunction()
+    #app.getFrame().updateFunction()
     global eq
     global ErrorLog
     eq = Equation.parse(eq)
@@ -118,8 +122,6 @@ def animate(i):
     xScale = 1
     yScale = 1
 
-
-
     boundEvalChange = False
 
     if( not(str(xminPrev) == str(xmin))) or not (str(xmaxPrev) == str(xmax) or not(str(yminPrev) == str(ymin))) or not \
@@ -166,16 +168,18 @@ def animate(i):
 
         if(initializationSuccess == True):
 
-            fofx, = ax.plot(Y.getDomain(), Y.getYFunction(), "red", label = "Function")
-            fprimeofx, = ax.plot(Y.getDomain(), Y.getYDeriv(), "blue", label = "First Derivative")
-            fdoubleprimeofx, = ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green", label = "Second Derivative")
+            if(showF):fofx, = ax.plot(Y.getDomain(), Y.getYFunction(), "red", label = "Function")
+            if (showFPrime):fprimeofx, = ax.plot(Y.getDomain(), Y.getYDeriv(), "blue", label = "First Derivative")
+            if (showFDoublePrime):fdoubleprimeofx, = ax.plot(Y.getDomain(), Y.getYSecondDeriv(), "green", label = "Second Derivative")
 
             fhole = plt.scatter(Y.getHoleCoor()[0], Y.getHoleCoor()[1], s=50, facecolors='none', edgecolors='purple')
             fextrema = plt.scatter(Y.getExtremaCoor()[0], Y.getExtremaCoor()[1], c="blue", s=25)
             finflection = plt.scatter(Y.getInflectionCoor()[0], Y.getInflectionCoor()[1], c="green", s=25)
 
-            plt.legend([fofx, fprimeofx, fdoubleprimeofx, fhole, fextrema, finflection] , ["Function","First Derivative", "Second Derivative", "Holes", "Extrema", "Inflection"], bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
-
+            if(showF and showFPrime and showFDoublePrime):
+                plt.legend([fofx, fprimeofx, fdoubleprimeofx, fhole, fextrema, finflection] , ["Function","First Derivative", "Second Derivative", "Holes", "Extrema", "Inflection"], bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
+            else:
+                plt.legend([fhole, fextrema, finflection] , ["Holes", "Extrema", "Inflection"], bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
 
             global integral
             integral = 0
@@ -223,7 +227,7 @@ def animate(i):
 
             #plt.savefig(eq + ".svg", dpi = 1000)
 
-        app.getFrame().updateFunction()
+        #app.getFrame().updateFunction()
 
 class GraphingCalculator(tk.Tk):
 
@@ -286,86 +290,83 @@ class GraphPage(tk.Frame):
     global integral
     global FTC
 
-    def updateFunction(self):
-        global label
-        global eq
-        global Xmax
-        global Xmin
-        global Ymax
-        global Ymin
-
-        global A
-        global B
-
-        global fontName
-        global fontSize
-
-
-        func = e1.get()
-
-        eq = func
-
-        try:
-            if(len(xminEntry.get()) > 0):
-                Xmin = float(xminEntry.get())
-            else:
-                Xmin = -10.0
-
-            if (len(xmaxEntry.get()) > 0):
-                Xmax = float(xmaxEntry.get())
-            else:
-                Xmax = 10.0
-
-            if (len(yminEntry.get()) > 0):
-                Ymin = float(yminEntry.get())
-            else:
-                Ymin = -10.0
-
-            if (len(ymaxEntry.get()) > 0):
-                Ymax = float(ymaxEntry.get())
-            else:
-                Ymax = 10.0
-
-            if (len(AEntry.get()) > 0):
-                A = float(AEntry.get())
-            else:
-                A = 0
-
-            if (len(BEntry.get()) > 0):
-                B = float(BEntry.get())
-            else:
-                B = 0
-
-            IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font=(fontName, fontSize))
-            IntegralLabelText.configure(background="white")
-            IntegralLabelText.grid(row=9, column=0)
-
-            global integral
-
-            IntegralLabel = Label(self, text=integral, font=(fontName, fontSize))
-            IntegralLabel.configure(background = "white")
-            IntegralLabel.grid(row=9, column=1)
-
-            global FTCL
-
-            FTCLabelText = Label(self, text=FTCL, font=(fontName, fontSize))
-            FTCLabelText.configure(background = "white")
-            FTCLabelText.grid(row=10, column=0)
-
-            global FTC
-
-            FTCLabel = Label(self, text=str(FTC), font=(fontName, fontSize))
-            FTCLabel.configure(background = "white")
-            FTCLabel.grid(row=10, column=1)
-
-        except ValueError:
-            print("Check Fields")
-
-
-
-
 
     def __init__(self, parent, controller):
+
+        def updateFunction(event):
+            global label
+            global eq
+            global Xmax
+            global Xmin
+            global Ymax
+            global Ymin
+
+            global A
+            global B
+
+            global fontName
+            global fontSize
+
+            func = e1.get()
+
+            eq = func
+
+            try:
+                if (len(xminEntry.get()) > 0):
+                    Xmin = float(xminEntry.get())
+                else:
+                    Xmin = -10.0
+
+                if (len(xmaxEntry.get()) > 0):
+                    Xmax = float(xmaxEntry.get())
+                else:
+                    Xmax = 10.0
+
+                if (len(yminEntry.get()) > 0):
+                    Ymin = float(yminEntry.get())
+                else:
+                    Ymin = -10.0
+
+                if (len(ymaxEntry.get()) > 0):
+                    Ymax = float(ymaxEntry.get())
+                else:
+                    Ymax = 10.0
+
+                if (len(AEntry.get()) > 0):
+                    A = float(AEntry.get())
+                else:
+                    A = 0
+
+                if (len(BEntry.get()) > 0):
+                    B = float(BEntry.get())
+                else:
+                    B = 0
+
+                IntegralLabelText = Label(self, text="Integral of f'(x) from A to B =", font=(fontName, fontSize))
+                IntegralLabelText.configure(background="white")
+                IntegralLabelText.grid(row=9, column=0)
+
+                global integral
+
+                IntegralLabel = Label(self, text=integral, font=(fontName, fontSize))
+                IntegralLabel.configure(background="white")
+                IntegralLabel.grid(row=9, column=1)
+
+                global FTCL
+
+                FTCLabelText = Label(self, text=FTCL, font=(fontName, fontSize))
+                FTCLabelText.configure(background="white")
+                FTCLabelText.grid(row=10, column=0)
+
+                global FTC
+
+                FTCLabel = Label(self, text=str(FTC), font=(fontName, fontSize))
+                FTCLabel.configure(background="white")
+                FTCLabel.grid(row=10, column=1)
+
+            except ValueError:
+                print("Check Fields")
+
         global fontName
         global fontSize
 
@@ -383,6 +384,8 @@ class GraphPage(tk.Frame):
         e1.configure(background = "#E0E0E0")
         e1.grid(row=2, column=1)
 
+        e1.bind('<Return>',updateFunction)
+
         EquationLabel = Label(self, text="f(x) =", font = (fontName,fontSize))
         EquationLabel.configure(background = "white")
         EquationLabel.grid(row=2, column=0)
@@ -391,6 +394,7 @@ class GraphPage(tk.Frame):
         xminEntry = Entry(self)
         xminEntry.configure(background = "#E0E0E0")
         xminEntry.grid(row=3, column=1)
+        xminEntry.bind('<Return>',updateFunction)
 
         xminLabel = Label(self, text="Xmin:", font = (fontName,fontSize))
         xminLabel.configure(background = "white")
@@ -400,6 +404,7 @@ class GraphPage(tk.Frame):
         xmaxEntry = Entry(self)
         xmaxEntry.configure(background = "#E0E0E0")
         xmaxEntry.grid(row=4, column=1)
+        xmaxEntry.bind('<Return>',updateFunction)
 
         xmaxLabel = Label(self, text="Xmax:", font = (fontName,fontSize))
         xmaxLabel.configure(background = "white")
@@ -409,6 +414,7 @@ class GraphPage(tk.Frame):
         yminEntry = Entry(self)
         yminEntry.configure(background = "#E0E0E0")
         yminEntry.grid(row=5, column=1)
+        yminEntry.bind('<Return>',updateFunction)
 
         yminLabel = Label(self, text="Ymin:", font = (fontName,fontSize))
         yminLabel.configure(background = "white")
@@ -418,6 +424,7 @@ class GraphPage(tk.Frame):
         ymaxEntry = Entry(self)
         ymaxEntry.configure(background = "#E0E0E0")
         ymaxEntry.grid(row=6, column=1)
+        ymaxEntry.bind('<Return>',updateFunction)
 
         ymaxLabel = Label(self, text="Ymax:", font = (fontName,fontSize))
         ymaxLabel.configure(background = "white")
@@ -427,6 +434,7 @@ class GraphPage(tk.Frame):
         AEntry = Entry(self)
         AEntry.configure(background = "#E0E0E0")
         AEntry.grid(row=7, column=1)
+        AEntry.bind('<Return>',updateFunction)
 
         ALabel = Label(self, text="Lower Limit (A):", font = (fontName,fontSize))
         ALabel.configure(background = "white")
@@ -436,6 +444,7 @@ class GraphPage(tk.Frame):
         BEntry = Entry(self)
         BEntry.configure(background = "#E0E0E0")
         BEntry.grid(row=8, column=1)
+        BEntry.bind('<Return>',updateFunction)
 
         BLabel = Label(self, text="Upper Limit (B):", font = (fontName,fontSize))
         BLabel.configure(background = "white")
