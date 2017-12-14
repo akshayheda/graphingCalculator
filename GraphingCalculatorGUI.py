@@ -10,6 +10,7 @@ import tkinter as tk
 from tkinter import *
 
 OperatingSystem = platform.system()
+OperatingSystem = "Windows"
 
 if(OperatingSystem == "Windows"):
     from Equation import Equation

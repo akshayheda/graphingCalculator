@@ -206,6 +206,17 @@ class Equation:
 
         return eq
 
+    def AsymptoticFunction(self):
+        if(self.getExpression().find("tan(") != -1):
+            return True
+        elif(self.getExpression().find("/tan(") != -1):
+            return True
+        elif (self.getExpression().find("/sin(") != -1):
+            return True
+        elif (self.getExpression().find("/cos(") != -1):
+            return True
+        else:
+            return False
 
 
     # publically accessable getter functions, to access generated values of this object
@@ -274,17 +285,28 @@ class Equation:
     # @param Domain: the array of X values to evaluate
     # @param level: can be 0 for function, 1 for derivative, or 2 for second derivative
     def generateFunction(self, level):
+
+        showFValues = False
+        showFPrimeValues = False
+        showFDoublePrimeValues = False
+
         yvals = []
-        xIndex = 0
+
         if (level == 0):
             for i in self.Domain:
-                yvals.append(self.evaluate(i))
+                value = self.evaluate(i)
+                yvals.append(value)
+                if(showFValues): print("X: " + str(i),"f(x): " + str(value))
         if (level == 1):
             for i in self.Domain:
-                yvals.append(self.deriv(i))
+                value = self.deriv(i)
+                yvals.append(value)
+                if (showFPrimeValues): print("X: " + str(i), "f'(x): " + str(value))
         if (level == 2):
             for i in self.Domain:
-                yvals.append(self.secondDeriv(i))
+                value = self.secondDeriv(i)
+                yvals.append(value)
+                if (showFDoublePrimeValues): print("X: " + str(i), "f(x): " + str(value))
         return yvals
 
     # evaluates the function at a given x value
@@ -303,10 +325,13 @@ class Equation:
             y = np.nan
 
         if (np.iscomplex(y)):
-            y = (np.nan)
+            y = np.nan
         # error handling for float error - if a value is below the bound, it is set to zero
         if (abs(y) < 1e-9):
             y = 0
+        if(self.AsymptoticFunction() and (abs(self.Ymin) + abs(self.Ymax)) < y):
+            y = np.nan
+
         return y
 
     # derivative evaluation using a difference quotient
@@ -335,15 +360,21 @@ class Equation:
         h = 0.0001
         y2 = self.deriv(xval + h)
         y1 = self.deriv(xval - h)
-        # If derivative is undefined at the point, then the second derivative is undefined
-        if (y1 == np.nan or y2 == np.nan):
+        y = self.deriv(xval)
+        if (isnan(y)):
+            return np.nan
+        secondDeriv = (y2 - y1) / (2 * h)
+        # If function is undefined at the point, then the second derivative is undefined
+        if (y1 == np.nan or y2 == np.nan or secondDeriv == np.nan or self.deriv(xval) == np.nan):
             secondDeriv = np.nan
+        # second derivative is the slope between two points that are very close to each other
         else:
             secondDeriv = (y2 - y1) / (2 * h)
-        # error handling for values close to zero being set equal to zero. This is a larger bound than earlier as error accumulates.
-        if (abs(secondDeriv) <= 5e-8):
+        # error handling for values close to zero being set equal to zero
+        if (abs(secondDeriv) <= 1e-9):
             secondDeriv = 0
         return secondDeriv
+
 
     # Uses Simpson's 3/8th rule for precise integral estimation
     # integral = ((b-a)/8) [f(a) + 3f((2a + b))/3)) + 3f((a+2b)/3) + f(b)]
