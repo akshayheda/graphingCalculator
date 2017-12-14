@@ -88,7 +88,7 @@ class Equation:
         eq = re.sub("([0-9])x", "\\1*x", eq)
         eq = re.sub("([0-9])\(", "\\1*(", eq)
         eq = re.sub("([0-9])([a-z])", "\\1*\\2", eq)
-
+        eq = re.sub("\)([a-z])", ")*\\1", eq)
         eq = eq.replace(")(", ")*(")
 
         def parseSQRT(equation):
