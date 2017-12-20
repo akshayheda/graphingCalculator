@@ -75,6 +75,7 @@ class Equation:
         eq = eq.replace("csc(", "(1)/sin(")
         eq = eq.replace("cot(", "(1)/tan(")
 
+        #replaces inverse functions with python notation
         eq = eq.replace("arctan(", "atan(")
         eq = eq.replace("arcsin(", "asin(")
         eq = eq.replace("arccos(", "acos(")
@@ -91,27 +92,23 @@ class Equation:
         eq = re.sub("\)([a-z])", ")*\\1", eq)
         eq = eq.replace(")(", ")*(")
 
+        #replaces square roots with numerical values truncated rounded at 3 digits of precision
         def parseSQRT(equation):
+            #finds an instance of sqrt, then isolates the value, and replaces with the sqrt(value)
             start = 0
             start = equation.find("sqrt(", start)
-
             if start == -1:
                 return equation
-
             end = equation.find(")", start + 1)
-
             number = equation[start + 5: end]
-
             number = float(number)
-
             equation = equation.replace(str(equation[start:end +1]), str(round(sqrt(number), 3)))
-
             return equation
-
         eq = parseSQRT(eq)
 
         return eq
 
+    #case to deal with repeatedly asymptotic functions
     def AsymptoticFunction(self):
         if(self.getExpression().find("tan(") != -1):
             return True
